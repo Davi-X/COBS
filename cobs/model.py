@@ -25,7 +25,41 @@ class Reward:
     """
 
     def __init__(self):
-        pass
+        self.zones = list()
+        self.energy_consum = 0
+        self.thermal_comfort = 0
+        self.value = 0
+
+    def reward(self, state):
+        self.zones = list(state['Lights'].keys())
+        lights_elect = 0
+        thermal_num = 0
+        den = 0
+
+        for zone in self.zones:
+            T_ci = abs(state['PMV'][zone])
+            if T_ci > 0.5:
+                T_ci -= 0.5
+            else:
+                T_ci = 0
+
+            O_i = state['occupancy'][zone]
+            if O_i > 0:
+                O_i = 1
+
+            den += O_i
+            thermal_num += O_i * T_ci
+
+            if zone == "Core_bottom" or zone == "Core_mid" or zone == "Core_top":
+                continue
+            lights_elect += state['Lights'][zone]
+
+        self.energy_consum = state["HVAC Power"] + lights_elect
+        if den != 0:
+            self.thermal_comfort = thermal_num / den
+        self.value = self.energy_consum + self.thermal_comfort
+        # print(self.value)
+        return self.value
 
 
 class Model:
@@ -416,6 +450,23 @@ class Model:
                     continue
                 current_state["PMV"][self.thermal_names[zone]] = self.api.exchange.get_variable_value(handle)
 
+        if "Zone Thermal Comfort Fanger Model PPD" in self.get_available_names_under_group("Output:Variable"):
+            current_state["PPD"] = dict()
+            for zone in self.thermal_names:
+                handle = self.api.exchange.get_variable_handle("Zone Thermal Comfort Fanger Model PPD", zone)
+                if handle == -1:
+                    continue
+                current_state["PPD"][self.thermal_names[zone]] = self.api.exchange.get_variable_value(handle)
+
+        if "Lights Electric Power" in self.get_available_names_under_group("Output:Variable"):
+            current_state["Lights"] = dict()
+            for zone in self.thermal_names:
+                key = self.thermal_names[zone] + '_LIGHTS'
+                handle = self.api.exchange.get_variable_handle("Lights Electric Power", key)
+                if handle == -1:
+                    continue
+                current_state["Lights"][self.thermal_names[zone]] = self.api.exchange.get_variable_value(handle)
+
         # Add state values
         state_vars = self.get_current_state_variables()
 
@@ -423,7 +474,7 @@ class Model:
         for entry in self.idf.idfobjects['OUTPUT:VARIABLE']:
             # we only care about the output vars for Gnu-RL
             if (entry['Variable_Name'], entry['Key_Value']) in self.eplus_naming_dict.keys() or \
-               (entry['Variable_Name'], entry['Key_Value']) in state_vars:
+                    (entry['Variable_Name'], entry['Key_Value']) in state_vars:
                 var_name = entry['Variable_Name']
 
                 # if the key value is not associated with a zone return None for variable handler
@@ -435,6 +486,7 @@ class Model:
                 else:
                     key_val = entry['Key_Value']
                 handle = self.api.exchange.get_variable_handle(var_name, key_val)
+                # print(var_name, key_val, handle)
                 if handle == -1:
                     continue
                 # name the state value based on Gnu-RL paper
@@ -476,7 +528,7 @@ class Model:
         # print("Child: Printing Reward")
         # Calculate Reward
         if self.reward is not None:
-            self.prev_reward = self.reward.reward(current_state, events)
+            self.prev_reward = self.reward.reward(current_state)
 
         # Trigger events
         for key in events["actuator"]:
@@ -883,7 +935,8 @@ class Model:
 
         return zone_blinds
 
-    def set_blinds(self, windows, blind_material_name=None, shading_control_type='AlwaysOff', setpoint=50, agent_control=False):
+    def set_blinds(self, windows, blind_material_name=None, shading_control_type='AlwaysOff', setpoint=50,
+                   agent_control=False):
         """
         Install blinds that can be controlled on some given windows.
 
@@ -944,7 +997,6 @@ class Model:
                         self.add_configuration("Schedule:Constant", values=angle_schedule)
 
                     self.add_configuration("WindowShadingControl", values=shading)
-
 
     def set_occupancy(self, occupancy, locations):
         """
