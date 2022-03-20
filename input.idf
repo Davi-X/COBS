@@ -7,10 +7,8 @@ SimulationControl,
     YES,                      !- Do Zone Sizing Calculation
     YES,                      !- Do System Sizing Calculation
     YES,                      !- Do Plant Sizing Calculation
-    YES,                      !- Run Simulation for Sizing Periods
-    NO,                       !- Run Simulation for Weather File Run Periods
-    YES,                      !- Do HVAC Sizing Simulation for Sizing Periods
-    2;                        !- Maximum Number of HVAC Sizing Simulation Passes
+    NO,                       !- Run Simulation for Sizing Periods
+    YES;                      !- Run Simulation for Weather File Run Periods
 
 Building,
     Ref Bldg Large Office New2004_v1.3_5.0,    !- Name
@@ -113,13 +111,13 @@ SizingPeriod:DesignDay,
 
 RunPeriod,
     Run Period 1,             !- Name
-    1,                        !- Begin Month
+    7,                        !- Begin Month
     1,                        !- Begin Day of Month
     ,                         !- Begin Year
-    12,                       !- End Month
-    31,                       !- End Day of Month
+    7,                        !- End Month
+    14,                       !- End Day of Month
     ,                         !- End Year
-    Sunday,                   !- Day of Week for Start Day
+    Monday,                   !- Day of Week for Start Day
     No,                       !- Use Weather File Holidays and Special Days
     No,                       !- Use Weather File Daylight Saving Period
     No,                       !- Apply Weekend Holiday Rule
@@ -10588,17 +10586,57 @@ OutputControl:ReportingTolerances,
 
 Output:Variable,
     *,                        !- Key Value
+    Site Outdoor Air Relative Humidity,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Wind Speed,          !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Wind Direction,      !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+Output:Variable,
+    VAV_3_OA-VAV_3_CoolCNode,    !- Key Value
+    System Node Temperature,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+Output:Variable,
+    VAV_5_OA-VAV_5_CoolCNode,    !- Key Value
+    System Node Temperature,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+Output:Variable,
+    VAV_1_OA-VAV_1_CoolCNode,    !- Key Value
+    System Node Temperature,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+Output:Variable,
+    VAV_2_OA-VAV_2_CoolCNode,    !- Key Value
+    System Node Temperature,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Pump Electric Energy,     !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Air System Outdoor Air Heat Recovery Bypass Minimum Outdoor Air Mixed Air Temperature,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
     Site Direct Solar Radiation Rate per Area,    !- Variable Name
     Hourly;                   !- Reporting Frequency
 
 Output:Variable,
     *,                        !- Key Value
     Facility Total HVAC Electric Demand Power,    !- Variable Name
-    Hourly;                   !- Reporting Frequency
-
-Output:Variable,
-    *,                        !- Key Value
-    System Node Temperature,    !- Variable Name
     Hourly;                   !- Reporting Frequency
 
 Output:Variable,
@@ -10654,16 +10692,6 @@ Output:Variable,
 Output:Variable,
     *,                        !- Key Value
     Site Outdoor Air Drybulb Temperature,    !- Variable Name
-    HOURLY;                   !- Reporting Frequency
-
-Output:Variable,
-    *,                        !- Key Value
-    Site Outdoor Air Humidity Ratio,    !- Variable Name
-    HOURLY;                   !- Reporting Frequency
-
-Output:Variable,
-    *,                        !- Key Value
-    Site Outdoor Air Relative Humidity,    !- Variable Name
     HOURLY;                   !- Reporting Frequency
 
 Output:Variable,

@@ -1,4 +1,4 @@
-!- Darwin Line endings 
+!- Linux Line endings 
 
 Version,
     9.3;                      !- Version Identifier
@@ -12,7 +12,7 @@ SimulationControl,
 
 Building,
     Building,                 !- Name
-    30.0,                     !- North Axis
+    30,                       !- North Axis
     City,                     !- Terrain
     0.04,                     !- Loads Convergence Tolerance Value
     0.4,                      !- Temperature Convergence Tolerance Value
@@ -36,8 +36,8 @@ Site:Location,
     Pittsburgh Allegheny Co Ap_PA_USA Design_Conditions,    !- Name
     40.35,                    !- Latitude
     -79.92,                   !- Longitude
-    -5.0,                     !- Time Zone
-    380.0;                    !- Elevation
+    -5,                       !- Time Zone
+    380;                      !- Elevation
 
 SizingPeriod:DesignDay,
     Pittsburgh Allegheny Co Ap Ann Htg 99.6% Condns DB,    !- Name
@@ -45,7 +45,7 @@ SizingPeriod:DesignDay,
     21,                       !- Day of Month
     WinterDesignDay,          !- Day Type
     -15.4,                    !- Maximum DryBulb Temperature
-    0.0,                      !- Daily DryBulb Temperature Range
+    0,                        !- Daily DryBulb Temperature Range
     DefaultMultipliers,       !- DryBulb Temperature Range Modifier Type
     ,                         !- DryBulb Temperature Range Modifier Day Schedule Name
     Wetbulb,                  !- Humidity Condition Type
@@ -54,9 +54,9 @@ SizingPeriod:DesignDay,
     ,                         !- Humidity Ratio at Maximum DryBulb
     ,                         !- Enthalpy at Maximum DryBulb
     ,                         !- Daily WetBulb Temperature Range
-    96842.0,                  !- Barometric Pressure
+    96842,                    !- Barometric Pressure
     4.7,                      !- Wind Speed
-    240.0,                    !- Wind Direction
+    240,                      !- Wind Direction
     No,                       !- Rain Indicator
     No,                       !- Snow Indicator
     No,                       !- Daylight Saving Time Indicator
@@ -65,7 +65,7 @@ SizingPeriod:DesignDay,
     ,                         !- Diffuse Solar Day Schedule Name
     ,                         !- ASHRAE Clear Sky Optical Depth for Beam Irradiance taub
     ,                         !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance taud
-    0.0;                      !- Sky Clearness
+    0;                        !- Sky Clearness
 
 SizingPeriod:DesignDay,
     Pittsburgh Allegheny Co Ap Ann Clg .4% Condns DB=>MWB,    !- Name
@@ -82,9 +82,9 @@ SizingPeriod:DesignDay,
     ,                         !- Humidity Ratio at Maximum DryBulb
     ,                         !- Enthalpy at Maximum DryBulb
     ,                         !- Daily WetBulb Temperature Range
-    96842.0,                  !- Barometric Pressure
+    96842,                    !- Barometric Pressure
     4.4,                      !- Wind Speed
-    240.0,                    !- Wind Direction
+    240,                      !- Wind Direction
     No,                       !- Rain Indicator
     No,                       !- Snow Indicator
     No,                       !- Daylight Saving Time Indicator
@@ -129,33 +129,33 @@ ScheduleTypeLimits,
 
 ScheduleTypeLimits,
     Fraction,                 !- Name
-    0.0,                      !- Lower Limit Value
-    1.0,                      !- Upper Limit Value
+    0,                        !- Lower Limit Value
+    1,                        !- Upper Limit Value
     CONTINUOUS;               !- Numeric Type
 
 ScheduleTypeLimits,
     Temperature,              !- Name
-    -60.0,                    !- Lower Limit Value
-    200.0,                    !- Upper Limit Value
+    -60,                      !- Lower Limit Value
+    200,                      !- Upper Limit Value
     CONTINUOUS,               !- Numeric Type
     Temperature;              !- Unit Type
 
 ScheduleTypeLimits,
     Control Type,             !- Name
-    0.0,                      !- Lower Limit Value
-    4.0,                      !- Upper Limit Value
+    0,                        !- Lower Limit Value
+    4,                        !- Upper Limit Value
     DISCRETE;                 !- Numeric Type
 
 ScheduleTypeLimits,
     On/Off,                   !- Name
-    0.0,                      !- Lower Limit Value
-    1.0,                      !- Upper Limit Value
+    0,                        !- Lower Limit Value
+    1,                        !- Upper Limit Value
     DISCRETE;                 !- Numeric Type
 
 ScheduleTypeLimits,
     FlowRate,                 !- Name
-    0.0,                      !- Lower Limit Value
-    10.0,                     !- Upper Limit Value
+    0,                        !- Lower Limit Value
+    10,                       !- Upper Limit Value
     CONTINUOUS;               !- Numeric Type
 
 Schedule:Compact,
@@ -412,18 +412,13 @@ Schedule:Compact,
     Until: 24:00,             !- Field 3
     1.0;                      !- Field 4
 
-Schedule:Constant,
-    SAT_SP,                   !- Name
-    Temperature,              !- Schedule Type Limits Name
-    10.0;                     !- Hourly Value
-
 Material,
     WD10,                     !- Name
     MediumSmooth,             !- Roughness
     0.667,                    !- Thickness
     0.115,                    !- Conductivity
-    513.0,                    !- Density
-    1381.0,                   !- Specific Heat
+    513,                      !- Density
+    1381,                     !- Specific Heat
     0.9,                      !- Thermal Absorptance
     0.78,                     !- Solar Absorptance
     0.78;                     !- Visible Absorptance
@@ -433,8 +428,8 @@ Material,
     Rough,                    !- Roughness
     0.0127,                   !- Thickness
     1.442,                    !- Conductivity
-    881.0,                    !- Density
-    1674.0,                   !- Specific Heat
+    881,                      !- Density
+    1674,                     !- Specific Heat
     0.9,                      !- Thermal Absorptance
     0.65,                     !- Solar Absorptance
     0.65;                     !- Visible Absorptance
@@ -444,8 +439,8 @@ Material,
     VeryRough,                !- Roughness
     0.0094999997,             !- Thickness
     0.162,                    !- Conductivity
-    1121.0,                   !- Density
-    1464.0,                   !- Specific Heat
+    1121,                     !- Density
+    1464,                     !- Specific Heat
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -455,8 +450,8 @@ Material,
     VeryRough,                !- Roughness
     0.076200001,              !- Thickness
     0.023,                    !- Conductivity
-    24.0,                     !- Density
-    1590.0,                   !- Specific Heat
+    24,                       !- Density
+    1590,                     !- Specific Heat
     0.9,                      !- Thermal Absorptance
     0.5,                      !- Solar Absorptance
     0.5;                      !- Visible Absorptance
@@ -466,8 +461,8 @@ Material,
     MediumSmooth,             !- Roughness
     0.019099999,              !- Thickness
     0.115,                    !- Conductivity
-    513.0,                    !- Density
-    1381.0,                   !- Specific Heat
+    513,                      !- Density
+    1381,                     !- Specific Heat
     0.9,                      !- Thermal Absorptance
     0.78,                     !- Solar Absorptance
     0.78;                     !- Visible Absorptance
@@ -477,8 +472,8 @@ Material,
     MediumSmooth,             !- Roughness
     0.0127,                   !- Thickness
     0.115,                    !- Conductivity
-    545.0,                    !- Density
-    1213.0,                   !- Specific Heat
+    545,                      !- Density
+    1213,                     !- Specific Heat
     0.9,                      !- Thermal Absorptance
     0.78,                     !- Solar Absorptance
     0.78;                     !- Visible Absorptance
@@ -488,8 +483,8 @@ Material,
     Rough,                    !- Roughness
     0.090099998,              !- Thickness
     0.043000001,              !- Conductivity
-    10.0,                     !- Density
-    837.0,                    !- Specific Heat
+    10,                       !- Density
+    837,                      !- Specific Heat
     0.9,                      !- Thermal Absorptance
     0.75,                     !- Solar Absorptance
     0.75;                     !- Visible Absorptance
@@ -499,8 +494,8 @@ Material,
     MediumSmooth,             !- Roughness
     0.0127,                   !- Thickness
     0.16,                     !- Conductivity
-    801.0,                    !- Density
-    837.0,                    !- Specific Heat
+    801,                      !- Density
+    837,                      !- Specific Heat
     0.9,                      !- Thermal Absorptance
     0.75,                     !- Solar Absorptance
     0.75;                     !- Visible Absorptance
@@ -510,8 +505,8 @@ Material,
     MediumSmooth,             !- Roughness
     0.015900001,              !- Thickness
     0.16,                     !- Conductivity
-    801.0,                    !- Density
-    837.0,                    !- Specific Heat
+    801,                      !- Density
+    837,                      !- Specific Heat
     0.9,                      !- Thermal Absorptance
     0.75,                     !- Solar Absorptance
     0.75;                     !- Visible Absorptance
@@ -521,8 +516,8 @@ Material,
     MediumRough,              !- Roughness
     0.1016,                   !- Thickness
     1.31,                     !- Conductivity
-    2243.0,                   !- Density
-    837.0,                    !- Specific Heat
+    2243,                     !- Density
+    837,                      !- Specific Heat
     0.9,                      !- Thermal Absorptance
     0.65,                     !- Solar Absorptance
     0.65;                     !- Visible Absorptance
@@ -581,7 +576,7 @@ WindowMaterial:Glazing,
     0.898,                    !- Visible Transmittance at Normal Incidence
     0.081,                    !- Front Side Visible Reflectance at Normal Incidence
     0.081,                    !- Back Side Visible Reflectance at Normal Incidence
-    0.0,                      !- Infrared Transmittance at Normal Incidence
+    0,                        !- Infrared Transmittance at Normal Incidence
     0.84,                     !- Front Side Infrared Hemispherical Emissivity
     0.84,                     !- Back Side Infrared Hemispherical Emissivity
     0.9;                      !- Conductivity
@@ -597,7 +592,7 @@ WindowMaterial:Glazing,
     0.611,                    !- Visible Transmittance at Normal Incidence
     0.061,                    !- Front Side Visible Reflectance at Normal Incidence
     0.061,                    !- Back Side Visible Reflectance at Normal Incidence
-    0.0,                      !- Infrared Transmittance at Normal Incidence
+    0,                        !- Infrared Transmittance at Normal Incidence
     0.84,                     !- Front Side Infrared Hemispherical Emissivity
     0.84,                     !- Back Side Infrared Hemispherical Emissivity
     0.9;                      !- Conductivity
@@ -613,7 +608,7 @@ WindowMaterial:Glazing,
     0.881,                    !- Visible Transmittance at Normal Incidence
     0.08,                     !- Front Side Visible Reflectance at Normal Incidence
     0.08,                     !- Back Side Visible Reflectance at Normal Incidence
-    0.0,                      !- Infrared Transmittance at Normal Incidence
+    0,                        !- Infrared Transmittance at Normal Incidence
     0.84,                     !- Front Side Infrared Hemispherical Emissivity
     0.84,                     !- Back Side Infrared Hemispherical Emissivity
     0.9;                      !- Conductivity
@@ -629,7 +624,7 @@ WindowMaterial:Glazing,
     0.84,                     !- Visible Transmittance at Normal Incidence
     0.055,                    !- Front Side Visible Reflectance at Normal Incidence
     0.078,                    !- Back Side Visible Reflectance at Normal Incidence
-    0.0,                      !- Infrared Transmittance at Normal Incidence
+    0,                        !- Infrared Transmittance at Normal Incidence
     0.84,                     !- Front Side Infrared Hemispherical Emissivity
     0.1,                      !- Back Side Infrared Hemispherical Emissivity
     0.9;                      !- Conductivity
@@ -719,10 +714,10 @@ GlobalGeometryRules,
 
 Zone,
     PLENUM-1,                 !- Name
-    0.0,                      !- Direction of Relative North
-    0.0,                      !- X Origin
-    0.0,                      !- Y Origin
-    0.0,                      !- Z Origin
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0,                        !- Z Origin
     1,                        !- Type
     1,                        !- Multiplier
     0.609600067,              !- Ceiling Height
@@ -730,10 +725,10 @@ Zone,
 
 Zone,
     SPACE1-1,                 !- Name
-    0.0,                      !- Direction of Relative North
-    0.0,                      !- X Origin
-    0.0,                      !- Y Origin
-    0.0,                      !- Z Origin
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0,                        !- Z Origin
     1,                        !- Type
     1,                        !- Multiplier
     2.438400269,              !- Ceiling Height
@@ -741,10 +736,10 @@ Zone,
 
 Zone,
     SPACE2-1,                 !- Name
-    0.0,                      !- Direction of Relative North
-    0.0,                      !- X Origin
-    0.0,                      !- Y Origin
-    0.0,                      !- Z Origin
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0,                        !- Z Origin
     1,                        !- Type
     1,                        !- Multiplier
     2.438400269,              !- Ceiling Height
@@ -752,10 +747,10 @@ Zone,
 
 Zone,
     SPACE3-1,                 !- Name
-    0.0,                      !- Direction of Relative North
-    0.0,                      !- X Origin
-    0.0,                      !- Y Origin
-    0.0,                      !- Z Origin
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0,                        !- Z Origin
     1,                        !- Type
     1,                        !- Multiplier
     2.438400269,              !- Ceiling Height
@@ -763,10 +758,10 @@ Zone,
 
 Zone,
     SPACE4-1,                 !- Name
-    0.0,                      !- Direction of Relative North
-    0.0,                      !- X Origin
-    0.0,                      !- Y Origin
-    0.0,                      !- Z Origin
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0,                        !- Z Origin
     1,                        !- Type
     1,                        !- Multiplier
     2.438400269,              !- Ceiling Height
@@ -774,10 +769,10 @@ Zone,
 
 Zone,
     SPACE5-1,                 !- Name
-    0.0,                      !- Direction of Relative North
-    0.0,                      !- X Origin
-    0.0,                      !- Y Origin
-    0.0,                      !- Z Origin
+    0,                        !- Direction of Relative North
+    0,                        !- X Origin
+    0,                        !- Y Origin
+    0,                        !- Z Origin
     1,                        !- Type
     1,                        !- Multiplier
     2.438400269,              !- Ceiling Height
@@ -793,19 +788,19 @@ BuildingSurface:Detailed,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     0.5,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
-    0.0,                      !- Vertex 1 Xcoordinate
-    0.0,                      !- Vertex 1 Ycoordinate
-    3.0,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
+    4,                        !- Number of Vertices
+    0,                        !- Vertex 1 Xcoordinate
+    0,                        !- Vertex 1 Ycoordinate
+    3,                        !- Vertex 1 Zcoordinate
+    0,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
     2.4,                      !- Vertex 2 Zcoordinate
     30.5,                     !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Ycoordinate
     2.4,                      !- Vertex 3 Zcoordinate
     30.5,                     !- Vertex 4 Xcoordinate
-    0.0,                      !- Vertex 4 Ycoordinate
-    3.0;                      !- Vertex 4 Zcoordinate
+    0,                        !- Vertex 4 Ycoordinate
+    3;                        !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
     WALL-1PR,                 !- Name
@@ -817,19 +812,19 @@ BuildingSurface:Detailed,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     0.5,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    4,                        !- Number of Vertices
     30.5,                     !- Vertex 1 Xcoordinate
-    0.0,                      !- Vertex 1 Ycoordinate
-    3.0,                      !- Vertex 1 Zcoordinate
+    0,                        !- Vertex 1 Ycoordinate
+    3,                        !- Vertex 1 Zcoordinate
     30.5,                     !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Ycoordinate
     2.4,                      !- Vertex 2 Zcoordinate
     30.5,                     !- Vertex 3 Xcoordinate
     15.2,                     !- Vertex 3 Ycoordinate
     2.4,                      !- Vertex 3 Zcoordinate
     30.5,                     !- Vertex 4 Xcoordinate
     15.2,                     !- Vertex 4 Ycoordinate
-    3.0;                      !- Vertex 4 Zcoordinate
+    3;                        !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
     WALL-1PB,                 !- Name
@@ -841,19 +836,19 @@ BuildingSurface:Detailed,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     0.5,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    4,                        !- Number of Vertices
     30.5,                     !- Vertex 1 Xcoordinate
     15.2,                     !- Vertex 1 Ycoordinate
-    3.0,                      !- Vertex 1 Zcoordinate
+    3,                        !- Vertex 1 Zcoordinate
     30.5,                     !- Vertex 2 Xcoordinate
     15.2,                     !- Vertex 2 Ycoordinate
     2.4,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Xcoordinate
     15.2,                     !- Vertex 3 Ycoordinate
     2.4,                      !- Vertex 3 Zcoordinate
-    0.0,                      !- Vertex 4 Xcoordinate
+    0,                        !- Vertex 4 Xcoordinate
     15.2,                     !- Vertex 4 Ycoordinate
-    3.0;                      !- Vertex 4 Zcoordinate
+    3;                        !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
     WALL-1PL,                 !- Name
@@ -865,19 +860,19 @@ BuildingSurface:Detailed,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     0.5,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
-    0.0,                      !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    0,                        !- Vertex 1 Xcoordinate
     15.2,                     !- Vertex 1 Ycoordinate
-    3.0,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
+    3,                        !- Vertex 1 Zcoordinate
+    0,                        !- Vertex 2 Xcoordinate
     15.2,                     !- Vertex 2 Ycoordinate
     2.4,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Ycoordinate
     2.4,                      !- Vertex 3 Zcoordinate
-    0.0,                      !- Vertex 4 Xcoordinate
-    0.0,                      !- Vertex 4 Ycoordinate
-    3.0;                      !- Vertex 4 Zcoordinate
+    0,                        !- Vertex 4 Xcoordinate
+    0,                        !- Vertex 4 Ycoordinate
+    3;                        !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
     TOP-1,                    !- Name
@@ -888,20 +883,20 @@ BuildingSurface:Detailed,
     ,                         !- Outside Boundary Condition Object
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
-    0.0,                      !- Vertex 1 Xcoordinate
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0,                        !- Vertex 1 Xcoordinate
     15.2,                     !- Vertex 1 Ycoordinate
-    3.0,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
-    3.0,                      !- Vertex 2 Zcoordinate
+    3,                        !- Vertex 1 Zcoordinate
+    0,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    3,                        !- Vertex 2 Zcoordinate
     30.5,                     !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
-    3.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    3,                        !- Vertex 3 Zcoordinate
     30.5,                     !- Vertex 4 Xcoordinate
     15.2,                     !- Vertex 4 Ycoordinate
-    3.0;                      !- Vertex 4 Zcoordinate
+    3;                        !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
     C1-1P,                    !- Name
@@ -912,16 +907,16 @@ BuildingSurface:Detailed,
     C1-1,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     3.7,                      !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     30.5,                     !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Ycoordinate
     2.4,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Ycoordinate
     2.4,                      !- Vertex 3 Zcoordinate
     3.7,                      !- Vertex 4 Xcoordinate
     3.7,                      !- Vertex 4 Ycoordinate
@@ -936,8 +931,8 @@ BuildingSurface:Detailed,
     C2-1,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
@@ -945,7 +940,7 @@ BuildingSurface:Detailed,
     15.2,                     !- Vertex 2 Ycoordinate
     2.4,                      !- Vertex 2 Zcoordinate
     30.5,                     !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Ycoordinate
     2.4,                      !- Vertex 3 Zcoordinate
     26.8,                     !- Vertex 4 Xcoordinate
     3.7,                      !- Vertex 4 Ycoordinate
@@ -960,15 +955,15 @@ BuildingSurface:Detailed,
     C3-1,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     3.7,                      !- Vertex 2 Xcoordinate
     11.6,                     !- Vertex 2 Ycoordinate
     2.4,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Xcoordinate
     15.2,                     !- Vertex 3 Ycoordinate
     2.4,                      !- Vertex 3 Zcoordinate
     30.5,                     !- Vertex 4 Xcoordinate
@@ -984,15 +979,15 @@ BuildingSurface:Detailed,
     C4-1,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     3.7,                      !- Vertex 1 Xcoordinate
     3.7,                      !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
     2.4,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Xcoordinate
     15.2,                     !- Vertex 3 Ycoordinate
     2.4,                      !- Vertex 3 Zcoordinate
     3.7,                      !- Vertex 4 Xcoordinate
@@ -1008,8 +1003,8 @@ BuildingSurface:Detailed,
     C5-1,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
@@ -1033,18 +1028,18 @@ BuildingSurface:Detailed,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     0.5,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
-    0.0,                      !- Vertex 1 Xcoordinate
-    0.0,                      !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    0,                        !- Vertex 1 Xcoordinate
+    0,                        !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
     30.5,                     !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Zcoordinate
     30.5,                     !- Vertex 4 Xcoordinate
-    0.0,                      !- Vertex 4 Ycoordinate
+    0,                        !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
@@ -1056,16 +1051,16 @@ BuildingSurface:Detailed,
     C1-1P,                    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     3.7,                      !- Vertex 1 Xcoordinate
     3.7,                      !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
     2.4,                      !- Vertex 2 Zcoordinate
     30.5,                     !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Ycoordinate
     2.4,                      !- Vertex 3 Zcoordinate
     26.8,                     !- Vertex 4 Xcoordinate
     3.7,                      !- Vertex 4 Ycoordinate
@@ -1080,20 +1075,20 @@ BuildingSurface:Detailed,
     ,                         !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     3.7,                      !- Vertex 1 Ycoordinate
-    0.0,                      !- Vertex 1 Zcoordinate
+    0,                        !- Vertex 1 Zcoordinate
     30.5,                     !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Zcoordinate
     3.7,                      !- Vertex 4 Xcoordinate
     3.7,                      !- Vertex 4 Ycoordinate
-    0.0;                      !- Vertex 4 Zcoordinate
+    0;                        !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
     SB12,                     !- Name
@@ -1104,17 +1099,17 @@ BuildingSurface:Detailed,
     SB21,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     30.5,                     !- Vertex 1 Xcoordinate
-    0.0,                      !- Vertex 1 Ycoordinate
+    0,                        !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     30.5,                     !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
     26.8,                     !- Vertex 3 Xcoordinate
     3.7,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     26.8,                     !- Vertex 4 Xcoordinate
     3.7,                      !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1128,19 +1123,19 @@ BuildingSurface:Detailed,
     SB41,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     3.7,                      !- Vertex 1 Xcoordinate
     3.7,                      !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     3.7,                      !- Vertex 2 Xcoordinate
     3.7,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
-    0.0,                      !- Vertex 4 Xcoordinate
-    0.0,                      !- Vertex 4 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 4 Xcoordinate
+    0,                        !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
@@ -1152,17 +1147,17 @@ BuildingSurface:Detailed,
     SB51,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     3.7,                      !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     26.8,                     !- Vertex 2 Xcoordinate
     3.7,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     3.7,                      !- Vertex 3 Xcoordinate
     3.7,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     3.7,                      !- Vertex 4 Xcoordinate
     3.7,                      !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1177,16 +1172,16 @@ BuildingSurface:Detailed,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     0.5,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    4,                        !- Number of Vertices
     30.5,                     !- Vertex 1 Xcoordinate
-    0.0,                      !- Vertex 1 Ycoordinate
+    0,                        !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     30.5,                     !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
     30.5,                     !- Vertex 3 Xcoordinate
     15.2,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     30.5,                     !- Vertex 4 Xcoordinate
     15.2,                     !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1200,13 +1195,13 @@ BuildingSurface:Detailed,
     C2-1P,                    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     3.7,                      !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     30.5,                     !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Ycoordinate
     2.4,                      !- Vertex 2 Zcoordinate
     30.5,                     !- Vertex 3 Xcoordinate
     15.2,                     !- Vertex 3 Ycoordinate
@@ -1224,20 +1219,20 @@ BuildingSurface:Detailed,
     ,                         !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
-    0.0,                      !- Vertex 1 Zcoordinate
+    0,                        !- Vertex 1 Zcoordinate
     30.5,                     !- Vertex 2 Xcoordinate
     15.2,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     30.5,                     !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Zcoordinate
     26.8,                     !- Vertex 4 Xcoordinate
     3.7,                      !- Vertex 4 Ycoordinate
-    0.0;                      !- Vertex 4 Zcoordinate
+    0;                        !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
     SB21,                     !- Name
@@ -1248,19 +1243,19 @@ BuildingSurface:Detailed,
     SB12,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     3.7,                      !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     26.8,                     !- Vertex 2 Xcoordinate
     3.7,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     30.5,                     !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Zcoordinate
     30.5,                     !- Vertex 4 Xcoordinate
-    0.0,                      !- Vertex 4 Ycoordinate
+    0,                        !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
@@ -1272,17 +1267,17 @@ BuildingSurface:Detailed,
     SB32,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     30.5,                     !- Vertex 1 Xcoordinate
     15.2,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     30.5,                     !- Vertex 2 Xcoordinate
     15.2,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     26.8,                     !- Vertex 3 Xcoordinate
     11.6,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     26.8,                     !- Vertex 4 Xcoordinate
     11.6,                     !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1296,17 +1291,17 @@ BuildingSurface:Detailed,
     SB52,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     26.8,                     !- Vertex 2 Xcoordinate
     11.6,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     26.8,                     !- Vertex 3 Xcoordinate
     3.7,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     26.8,                     !- Vertex 4 Xcoordinate
     3.7,                      !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1321,17 +1316,17 @@ BuildingSurface:Detailed,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     0.5,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    4,                        !- Number of Vertices
     30.5,                     !- Vertex 1 Xcoordinate
     15.2,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     30.5,                     !- Vertex 2 Xcoordinate
     15.2,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 3 Xcoordinate
     15.2,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
-    0.0,                      !- Vertex 4 Xcoordinate
+    0,                        !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 4 Xcoordinate
     15.2,                     !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
 
@@ -1344,12 +1339,12 @@ BuildingSurface:Detailed,
     C3-1P,                    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     30.5,                     !- Vertex 1 Xcoordinate
     15.2,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Xcoordinate
     15.2,                     !- Vertex 2 Ycoordinate
     2.4,                      !- Vertex 2 Zcoordinate
     3.7,                      !- Vertex 3 Xcoordinate
@@ -1368,20 +1363,20 @@ BuildingSurface:Detailed,
     ,                         !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
-    0.0,                      !- Vertex 1 Zcoordinate
+    0,                        !- Vertex 1 Zcoordinate
     3.7,                      !- Vertex 2 Xcoordinate
     11.6,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 3 Xcoordinate
     15.2,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     30.5,                     !- Vertex 4 Xcoordinate
     15.2,                     !- Vertex 4 Ycoordinate
-    0.0;                      !- Vertex 4 Zcoordinate
+    0;                        !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
     SB32,                     !- Name
@@ -1392,17 +1387,17 @@ BuildingSurface:Detailed,
     SB23,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     26.8,                     !- Vertex 2 Xcoordinate
     11.6,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     30.5,                     !- Vertex 3 Xcoordinate
     15.2,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     30.5,                     !- Vertex 4 Xcoordinate
     15.2,                     !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1416,17 +1411,17 @@ BuildingSurface:Detailed,
     SB43,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
-    0.0,                      !- Vertex 1 Xcoordinate
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0,                        !- Vertex 1 Xcoordinate
     15.2,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Xcoordinate
     15.2,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     3.7,                      !- Vertex 3 Xcoordinate
     11.6,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     3.7,                      !- Vertex 4 Xcoordinate
     11.6,                     !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1440,17 +1435,17 @@ BuildingSurface:Detailed,
     SB53,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     3.7,                      !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     3.7,                      !- Vertex 2 Xcoordinate
     11.6,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     26.8,                     !- Vertex 3 Xcoordinate
     11.6,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     26.8,                     !- Vertex 4 Xcoordinate
     11.6,                     !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1465,18 +1460,18 @@ BuildingSurface:Detailed,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     0.5,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
-    0.0,                      !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    0,                        !- Vertex 1 Xcoordinate
     15.2,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Xcoordinate
     15.2,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
-    0.0,                      !- Vertex 4 Xcoordinate
-    0.0,                      !- Vertex 4 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 4 Xcoordinate
+    0,                        !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
@@ -1488,16 +1483,16 @@ BuildingSurface:Detailed,
     C4-1P,                    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     3.7,                      !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Xcoordinate
     15.2,                     !- Vertex 2 Ycoordinate
     2.4,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Ycoordinate
     2.4,                      !- Vertex 3 Zcoordinate
     3.7,                      !- Vertex 4 Xcoordinate
     3.7,                      !- Vertex 4 Ycoordinate
@@ -1512,20 +1507,20 @@ BuildingSurface:Detailed,
     ,                         !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     3.7,                      !- Vertex 1 Xcoordinate
     3.7,                      !- Vertex 1 Ycoordinate
-    0.0,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 1 Zcoordinate
+    0,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 3 Xcoordinate
     15.2,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     3.7,                      !- Vertex 4 Xcoordinate
     11.6,                     !- Vertex 4 Ycoordinate
-    0.0;                      !- Vertex 4 Zcoordinate
+    0;                        !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
     SB41,                     !- Name
@@ -1536,17 +1531,17 @@ BuildingSurface:Detailed,
     SB14,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
-    0.0,                      !- Vertex 1 Xcoordinate
-    0.0,                      !- Vertex 1 Ycoordinate
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0,                        !- Vertex 1 Xcoordinate
+    0,                        !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
     3.7,                      !- Vertex 3 Xcoordinate
     3.7,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     3.7,                      !- Vertex 4 Xcoordinate
     3.7,                      !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1560,18 +1555,18 @@ BuildingSurface:Detailed,
     SB34,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     3.7,                      !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     3.7,                      !- Vertex 2 Xcoordinate
     11.6,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 3 Xcoordinate
     15.2,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
-    0.0,                      !- Vertex 4 Xcoordinate
+    0,                        !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 4 Xcoordinate
     15.2,                     !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
 
@@ -1584,17 +1579,17 @@ BuildingSurface:Detailed,
     SB54,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     3.7,                      !- Vertex 1 Xcoordinate
     3.7,                      !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     3.7,                      !- Vertex 2 Xcoordinate
     3.7,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     3.7,                      !- Vertex 3 Xcoordinate
     11.6,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     3.7,                      !- Vertex 4 Xcoordinate
     11.6,                     !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1608,8 +1603,8 @@ BuildingSurface:Detailed,
     C5-1P,                    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     3.7,                      !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
@@ -1632,20 +1627,20 @@ BuildingSurface:Detailed,
     ,                         !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
-    0.0,                      !- Vertex 1 Zcoordinate
+    0,                        !- Vertex 1 Zcoordinate
     26.8,                     !- Vertex 2 Xcoordinate
     3.7,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     3.7,                      !- Vertex 3 Xcoordinate
     3.7,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     3.7,                      !- Vertex 4 Xcoordinate
     11.6,                     !- Vertex 4 Ycoordinate
-    0.0;                      !- Vertex 4 Zcoordinate
+    0;                        !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
     SB51,                     !- Name
@@ -1656,17 +1651,17 @@ BuildingSurface:Detailed,
     SB15,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     3.7,                      !- Vertex 1 Xcoordinate
     3.7,                      !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     3.7,                      !- Vertex 2 Xcoordinate
     3.7,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     26.8,                     !- Vertex 3 Xcoordinate
     3.7,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     26.8,                     !- Vertex 4 Xcoordinate
     3.7,                      !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1680,17 +1675,17 @@ BuildingSurface:Detailed,
     SB25,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     3.7,                      !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     26.8,                     !- Vertex 2 Xcoordinate
     3.7,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     26.8,                     !- Vertex 3 Xcoordinate
     11.6,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     26.8,                     !- Vertex 4 Xcoordinate
     11.6,                     !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1704,17 +1699,17 @@ BuildingSurface:Detailed,
     SB35,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     26.8,                     !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     26.8,                     !- Vertex 2 Xcoordinate
     11.6,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     3.7,                      !- Vertex 3 Xcoordinate
     11.6,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     3.7,                      !- Vertex 4 Xcoordinate
     11.6,                     !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1728,17 +1723,17 @@ BuildingSurface:Detailed,
     SB45,                     !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
-    0.0,                      !- View Factor to Ground
-    4.0,                      !- Number of Vertices
+    0,                        !- View Factor to Ground
+    4,                        !- Number of Vertices
     3.7,                      !- Vertex 1 Xcoordinate
     11.6,                     !- Vertex 1 Ycoordinate
     2.4,                      !- Vertex 1 Zcoordinate
     3.7,                      !- Vertex 2 Xcoordinate
     11.6,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Zcoordinate
     3.7,                      !- Vertex 3 Xcoordinate
     3.7,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Zcoordinate
     3.7,                      !- Vertex 4 Xcoordinate
     3.7,                      !- Vertex 4 Ycoordinate
     2.4;                      !- Vertex 4 Zcoordinate
@@ -1751,19 +1746,19 @@ FenestrationSurface:Detailed,
     ,                         !- Outside Boundary Condition Object
     0.5,                      !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
-    4.0,                      !- Number of Vertices
-    3.0,                      !- Vertex 1 Xcoordinate
-    0.0,                      !- Vertex 1 Ycoordinate
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    3,                        !- Vertex 1 Xcoordinate
+    0,                        !- Vertex 1 Ycoordinate
     2.1,                      !- Vertex 1 Zcoordinate
-    3.0,                      !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
+    3,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
     0.9,                      !- Vertex 2 Zcoordinate
     16.8,                     !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Ycoordinate
     0.9,                      !- Vertex 3 Zcoordinate
     16.8,                     !- Vertex 4 Xcoordinate
-    0.0,                      !- Vertex 4 Ycoordinate
+    0,                        !- Vertex 4 Ycoordinate
     2.1;                      !- Vertex 4 Zcoordinate
 
 FenestrationSurface:Detailed,
@@ -1774,19 +1769,19 @@ FenestrationSurface:Detailed,
     ,                         !- Outside Boundary Condition Object
     0.5,                      !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
-    4.0,                      !- Number of Vertices
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
     21.3,                     !- Vertex 1 Xcoordinate
-    0.0,                      !- Vertex 1 Ycoordinate
+    0,                        !- Vertex 1 Ycoordinate
     2.1,                      !- Vertex 1 Zcoordinate
     21.3,                     !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Zcoordinate
     23.8,                     !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Zcoordinate
     23.8,                     !- Vertex 4 Xcoordinate
-    0.0,                      !- Vertex 4 Ycoordinate
+    0,                        !- Vertex 4 Ycoordinate
     2.1;                      !- Vertex 4 Zcoordinate
 
 FenestrationSurface:Detailed,
@@ -1797,8 +1792,8 @@ FenestrationSurface:Detailed,
     ,                         !- Outside Boundary Condition Object
     0.5,                      !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
-    4.0,                      !- Number of Vertices
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
     30.5,                     !- Vertex 1 Xcoordinate
     3.8,                      !- Vertex 1 Ycoordinate
     2.1,                      !- Vertex 1 Zcoordinate
@@ -1820,8 +1815,8 @@ FenestrationSurface:Detailed,
     ,                         !- Outside Boundary Condition Object
     0.5,                      !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
-    4.0,                      !- Number of Vertices
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
     27.4,                     !- Vertex 1 Xcoordinate
     15.2,                     !- Vertex 1 Ycoordinate
     2.1,                      !- Vertex 1 Zcoordinate
@@ -1843,18 +1838,18 @@ FenestrationSurface:Detailed,
     ,                         !- Outside Boundary Condition Object
     0.5,                      !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
-    4.0,                      !- Number of Vertices
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
     9.1,                      !- Vertex 1 Xcoordinate
     15.2,                     !- Vertex 1 Ycoordinate
     2.1,                      !- Vertex 1 Zcoordinate
     9.1,                      !- Vertex 2 Xcoordinate
     15.2,                     !- Vertex 2 Ycoordinate
-    0.0,                      !- Vertex 2 Zcoordinate
-    7.0,                      !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 2 Zcoordinate
+    7,                        !- Vertex 3 Xcoordinate
     15.2,                     !- Vertex 3 Ycoordinate
-    0.0,                      !- Vertex 3 Zcoordinate
-    7.0,                      !- Vertex 4 Xcoordinate
+    0,                        !- Vertex 3 Zcoordinate
+    7,                        !- Vertex 4 Xcoordinate
     15.2,                     !- Vertex 4 Ycoordinate
     2.1;                      !- Vertex 4 Zcoordinate
 
@@ -1866,18 +1861,18 @@ FenestrationSurface:Detailed,
     ,                         !- Outside Boundary Condition Object
     0.5,                      !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
-    4.0,                      !- Number of Vertices
-    0.0,                      !- Vertex 1 Xcoordinate
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    0,                        !- Vertex 1 Xcoordinate
     11.4,                     !- Vertex 1 Ycoordinate
     2.1,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Xcoordinate
     11.4,                     !- Vertex 2 Ycoordinate
     0.9,                      !- Vertex 2 Zcoordinate
-    0.0,                      !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Xcoordinate
     3.8,                      !- Vertex 3 Ycoordinate
     0.9,                      !- Vertex 3 Zcoordinate
-    0.0,                      !- Vertex 4 Xcoordinate
+    0,                        !- Vertex 4 Xcoordinate
     3.8,                      !- Vertex 4 Ycoordinate
     2.1;                      !- Vertex 4 Zcoordinate
 
@@ -1885,15 +1880,15 @@ Shading:Zone:Detailed,
     Main South Overhang,      !- Name
     FRONT-1,                  !- Base Surface Name
     ShadeTransSch,            !- Transmittance Schedule Name
-    4.0,                      !- Number of Vertices
-    0.0,                      !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    0,                        !- Vertex 1 Xcoordinate
     -1.3,                     !- Vertex 1 Ycoordinate
     2.2,                      !- Vertex 1 Zcoordinate
-    0.0,                      !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
+    0,                        !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
     2.2,                      !- Vertex 2 Zcoordinate
     19.8,                     !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Ycoordinate
     2.2,                      !- Vertex 3 Zcoordinate
     19.8,                     !- Vertex 4 Xcoordinate
     -1.3,                     !- Vertex 4 Ycoordinate
@@ -1903,18 +1898,18 @@ Shading:Zone:Detailed,
     South Door Overhang,      !- Name
     FRONT-1,                  !- Base Surface Name
     ShadeTransSch,            !- Transmittance Schedule Name
-    4.0,                      !- Number of Vertices
-    21.0,                     !- Vertex 1 Xcoordinate
-    -2.0,                     !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    21,                       !- Vertex 1 Xcoordinate
+    -2,                       !- Vertex 1 Ycoordinate
     2.6,                      !- Vertex 1 Zcoordinate
-    21.0,                     !- Vertex 2 Xcoordinate
-    0.0,                      !- Vertex 2 Ycoordinate
+    21,                       !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
     2.6,                      !- Vertex 2 Zcoordinate
     24.1,                     !- Vertex 3 Xcoordinate
-    0.0,                      !- Vertex 3 Ycoordinate
+    0,                        !- Vertex 3 Ycoordinate
     2.6,                      !- Vertex 3 Zcoordinate
     24.1,                     !- Vertex 4 Xcoordinate
-    -2.0,                     !- Vertex 4 Ycoordinate
+    -2,                       !- Vertex 4 Ycoordinate
     2.6;                      !- Vertex 4 Zcoordinate
 
 People,
@@ -1922,7 +1917,7 @@ People,
     SPACE1-1,                 !- Zone or ZoneList Name
     OCCUPY-1,                 !- Number of People Schedule Name
     people,                   !- Number of People Calculation Method
-    11.0,                     !- Number of People
+    11,                       !- Number of People
     ,                         !- People per Zone Floor Area
     ,                         !- Zone Floor Area per Person
     0.3,                      !- Fraction Radiant
@@ -1944,7 +1939,7 @@ People,
     SPACE2-1,                 !- Zone or ZoneList Name
     OCCUPY-1,                 !- Number of People Schedule Name
     people,                   !- Number of People Calculation Method
-    5.0,                      !- Number of People
+    5,                        !- Number of People
     ,                         !- People per Zone Floor Area
     ,                         !- Zone Floor Area per Person
     0.3,                      !- Fraction Radiant
@@ -1966,7 +1961,7 @@ People,
     SPACE3-1,                 !- Zone or ZoneList Name
     OCCUPY-1,                 !- Number of People Schedule Name
     people,                   !- Number of People Calculation Method
-    11.0,                     !- Number of People
+    11,                       !- Number of People
     ,                         !- People per Zone Floor Area
     ,                         !- Zone Floor Area per Person
     0.3,                      !- Fraction Radiant
@@ -1988,7 +1983,7 @@ People,
     SPACE4-1,                 !- Zone or ZoneList Name
     OCCUPY-1,                 !- Number of People Schedule Name
     people,                   !- Number of People Calculation Method
-    5.0,                      !- Number of People
+    5,                        !- Number of People
     ,                         !- People per Zone Floor Area
     ,                         !- Zone Floor Area per Person
     0.3,                      !- Fraction Radiant
@@ -2010,7 +2005,7 @@ People,
     SPACE5-1,                 !- Zone or ZoneList Name
     OCCUPY-1,                 !- Number of People Schedule Name
     people,                   !- Number of People Calculation Method
-    20.0,                     !- Number of People
+    20,                       !- Number of People
     ,                         !- People per Zone Floor Area
     ,                         !- Zone Floor Area per Person
     0.3,                      !- Fraction Radiant
@@ -2032,13 +2027,13 @@ Lights,
     SPACE1-1,                 !- Zone or ZoneList Name
     LIGHTS-1,                 !- Schedule Name
     LightingLevel,            !- Design Level Calculation Method
-    1584.0,                   !- Lighting Level
+    1584,                     !- Lighting Level
     ,                         !- Watts per Zone Floor Area
     ,                         !- Watts per Person
     0.2,                      !- Return Air Fraction
     0.59,                     !- Fraction Radiant
     0.2,                      !- Fraction Visible
-    0.0,                      !- Fraction Replaceable
+    0,                        !- Fraction Replaceable
     GeneralLights;            !- EndUse Subcategory
 
 Lights,
@@ -2046,13 +2041,13 @@ Lights,
     SPACE2-1,                 !- Zone or ZoneList Name
     LIGHTS-1,                 !- Schedule Name
     LightingLevel,            !- Design Level Calculation Method
-    684.0,                    !- Lighting Level
+    684,                      !- Lighting Level
     ,                         !- Watts per Zone Floor Area
     ,                         !- Watts per Person
     0.2,                      !- Return Air Fraction
     0.59,                     !- Fraction Radiant
     0.2,                      !- Fraction Visible
-    0.0,                      !- Fraction Replaceable
+    0,                        !- Fraction Replaceable
     GeneralLights;            !- EndUse Subcategory
 
 Lights,
@@ -2060,13 +2055,13 @@ Lights,
     SPACE3-1,                 !- Zone or ZoneList Name
     LIGHTS-1,                 !- Schedule Name
     LightingLevel,            !- Design Level Calculation Method
-    1584.0,                   !- Lighting Level
+    1584,                     !- Lighting Level
     ,                         !- Watts per Zone Floor Area
     ,                         !- Watts per Person
     0.2,                      !- Return Air Fraction
     0.59,                     !- Fraction Radiant
     0.2,                      !- Fraction Visible
-    0.0,                      !- Fraction Replaceable
+    0,                        !- Fraction Replaceable
     GeneralLights;            !- EndUse Subcategory
 
 Lights,
@@ -2074,13 +2069,13 @@ Lights,
     SPACE4-1,                 !- Zone or ZoneList Name
     LIGHTS-1,                 !- Schedule Name
     LightingLevel,            !- Design Level Calculation Method
-    684.0,                    !- Lighting Level
+    684,                      !- Lighting Level
     ,                         !- Watts per Zone Floor Area
     ,                         !- Watts per Person
     0.2,                      !- Return Air Fraction
     0.59,                     !- Fraction Radiant
     0.2,                      !- Fraction Visible
-    0.0,                      !- Fraction Replaceable
+    0,                        !- Fraction Replaceable
     GeneralLights;            !- EndUse Subcategory
 
 Lights,
@@ -2088,13 +2083,13 @@ Lights,
     SPACE5-1,                 !- Zone or ZoneList Name
     LIGHTS-1,                 !- Schedule Name
     LightingLevel,            !- Design Level Calculation Method
-    2964.0,                   !- Lighting Level
+    2964,                     !- Lighting Level
     ,                         !- Watts per Zone Floor Area
     ,                         !- Watts per Person
     0.2,                      !- Return Air Fraction
     0.59,                     !- Fraction Radiant
     0.2,                      !- Fraction Visible
-    0.0,                      !- Fraction Replaceable
+    0,                        !- Fraction Replaceable
     GeneralLights;            !- EndUse Subcategory
 
 ElectricEquipment,
@@ -2102,60 +2097,60 @@ ElectricEquipment,
     SPACE1-1,                 !- Zone or ZoneList Name
     EQUIP-1,                  !- Schedule Name
     EquipmentLevel,           !- Design Level Calculation Method
-    1056.0,                   !- Design Level
+    1056,                     !- Design Level
     ,                         !- Watts per Zone Floor Area
     ,                         !- Watts per Person
-    0.0,                      !- Fraction Latent
+    0,                        !- Fraction Latent
     0.3,                      !- Fraction Radiant
-    0.0;                      !- Fraction Lost
+    0;                        !- Fraction Lost
 
 ElectricEquipment,
     SPACE2-1 ElecEq 1,        !- Name
     SPACE2-1,                 !- Zone or ZoneList Name
     EQUIP-1,                  !- Schedule Name
     EquipmentLevel,           !- Design Level Calculation Method
-    456.0,                    !- Design Level
+    456,                      !- Design Level
     ,                         !- Watts per Zone Floor Area
     ,                         !- Watts per Person
-    0.0,                      !- Fraction Latent
+    0,                        !- Fraction Latent
     0.3,                      !- Fraction Radiant
-    0.0;                      !- Fraction Lost
+    0;                        !- Fraction Lost
 
 ElectricEquipment,
     SPACE3-1 ElecEq 1,        !- Name
     SPACE3-1,                 !- Zone or ZoneList Name
     EQUIP-1,                  !- Schedule Name
     EquipmentLevel,           !- Design Level Calculation Method
-    1056.0,                   !- Design Level
+    1056,                     !- Design Level
     ,                         !- Watts per Zone Floor Area
     ,                         !- Watts per Person
-    0.0,                      !- Fraction Latent
+    0,                        !- Fraction Latent
     0.3,                      !- Fraction Radiant
-    0.0;                      !- Fraction Lost
+    0;                        !- Fraction Lost
 
 ElectricEquipment,
     SPACE4-1 ElecEq 1,        !- Name
     SPACE4-1,                 !- Zone or ZoneList Name
     EQUIP-1,                  !- Schedule Name
     EquipmentLevel,           !- Design Level Calculation Method
-    456.0,                    !- Design Level
+    456,                      !- Design Level
     ,                         !- Watts per Zone Floor Area
     ,                         !- Watts per Person
-    0.0,                      !- Fraction Latent
+    0,                        !- Fraction Latent
     0.3,                      !- Fraction Radiant
-    0.0;                      !- Fraction Lost
+    0;                        !- Fraction Lost
 
 ElectricEquipment,
     SPACE5-1 ElecEq 1,        !- Name
     SPACE5-1,                 !- Zone or ZoneList Name
     EQUIP-1,                  !- Schedule Name
     EquipmentLevel,           !- Design Level Calculation Method
-    1976.0,                   !- Design Level
+    1976,                     !- Design Level
     ,                         !- Watts per Zone Floor Area
     ,                         !- Watts per Person
-    0.0,                      !- Fraction Latent
+    0,                        !- Fraction Latent
     0.3,                      !- Fraction Radiant
-    0.0;                      !- Fraction Lost
+    0;                        !- Fraction Lost
 
 ZoneInfiltration:DesignFlowRate,
     SPACE1-1 Infil 1,         !- Name
@@ -2166,10 +2161,10 @@ ZoneInfiltration:DesignFlowRate,
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
-    0.0,                      !- Constant Term Coefficient
-    0.0,                      !- Temperature Term Coefficient
+    0,                        !- Constant Term Coefficient
+    0,                        !- Temperature Term Coefficient
     0.2237,                   !- Velocity Term Coefficient
-    0.0;                      !- Velocity Squared Term Coefficient
+    0;                        !- Velocity Squared Term Coefficient
 
 ZoneInfiltration:DesignFlowRate,
     SPACE2-1 Infil 1,         !- Name
@@ -2180,10 +2175,10 @@ ZoneInfiltration:DesignFlowRate,
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
-    0.0,                      !- Constant Term Coefficient
-    0.0,                      !- Temperature Term Coefficient
+    0,                        !- Constant Term Coefficient
+    0,                        !- Temperature Term Coefficient
     0.2237,                   !- Velocity Term Coefficient
-    0.0;                      !- Velocity Squared Term Coefficient
+    0;                        !- Velocity Squared Term Coefficient
 
 ZoneInfiltration:DesignFlowRate,
     SPACE3-1 Infil 1,         !- Name
@@ -2194,10 +2189,10 @@ ZoneInfiltration:DesignFlowRate,
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
-    0.0,                      !- Constant Term Coefficient
-    0.0,                      !- Temperature Term Coefficient
+    0,                        !- Constant Term Coefficient
+    0,                        !- Temperature Term Coefficient
     0.2237,                   !- Velocity Term Coefficient
-    0.0;                      !- Velocity Squared Term Coefficient
+    0;                        !- Velocity Squared Term Coefficient
 
 ZoneInfiltration:DesignFlowRate,
     SPACE4-1 Infil 1,         !- Name
@@ -2208,10 +2203,10 @@ ZoneInfiltration:DesignFlowRate,
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
-    0.0,                      !- Constant Term Coefficient
-    0.0,                      !- Temperature Term Coefficient
+    0,                        !- Constant Term Coefficient
+    0,                        !- Temperature Term Coefficient
     0.2237,                   !- Velocity Term Coefficient
-    0.0;                      !- Velocity Squared Term Coefficient
+    0;                        !- Velocity Squared Term Coefficient
 
 ZoneInfiltration:DesignFlowRate,
     SPACE5-1 Infil 1,         !- Name
@@ -2222,45 +2217,45 @@ ZoneInfiltration:DesignFlowRate,
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
-    0.0,                      !- Constant Term Coefficient
-    0.0,                      !- Temperature Term Coefficient
+    0,                        !- Constant Term Coefficient
+    0,                        !- Temperature Term Coefficient
     0.2237,                   !- Velocity Term Coefficient
-    0.0;                      !- Velocity Squared Term Coefficient
+    0;                        !- Velocity Squared Term Coefficient
 
 DesignSpecification:OutdoorAir,
     SZ DSOA SPACE1-1,         !- Name
     Sum,                      !- Outdoor Air Method
     0.00472,                  !- Outdoor Air Flow per Person
     0.000508,                 !- Outdoor Air Flow per Zone Floor Area
-    0.0;                      !- Outdoor Air Flow per Zone
+    0;                        !- Outdoor Air Flow per Zone
 
 DesignSpecification:OutdoorAir,
     SZ DSOA SPACE2-1,         !- Name
     Sum,                      !- Outdoor Air Method
     0.00472,                  !- Outdoor Air Flow per Person
     0.000508,                 !- Outdoor Air Flow per Zone Floor Area
-    0.0;                      !- Outdoor Air Flow per Zone
+    0;                        !- Outdoor Air Flow per Zone
 
 DesignSpecification:OutdoorAir,
     SZ DSOA SPACE3-1,         !- Name
     Sum,                      !- Outdoor Air Method
     0.00472,                  !- Outdoor Air Flow per Person
     0.000508,                 !- Outdoor Air Flow per Zone Floor Area
-    0.0;                      !- Outdoor Air Flow per Zone
+    0;                        !- Outdoor Air Flow per Zone
 
 DesignSpecification:OutdoorAir,
     SZ DSOA SPACE4-1,         !- Name
     Sum,                      !- Outdoor Air Method
     0.00472,                  !- Outdoor Air Flow per Person
     0.000508,                 !- Outdoor Air Flow per Zone Floor Area
-    0.0;                      !- Outdoor Air Flow per Zone
+    0;                        !- Outdoor Air Flow per Zone
 
 DesignSpecification:OutdoorAir,
     SZ DSOA SPACE5-1,         !- Name
     Sum,                      !- Outdoor Air Method
     0.00472,                  !- Outdoor Air Flow per Person
     0.000508,                 !- Outdoor Air Flow per Zone Floor Area
-    0.0;                      !- Outdoor Air Flow per Zone
+    0;                        !- Outdoor Air Flow per Zone
 
 DesignSpecification:OutdoorAir,
     ZoneMinOARequirements,    !- Name
@@ -2279,23 +2274,23 @@ Sizing:Parameters,
 Sizing:Zone,
     SPACE1-1,                 !- Zone or ZoneList Name
     SupplyAirTemperature,     !- Zone Cooling Design Supply Air Temperature Input Method
-    16.0,                     !- Zone Cooling Design Supply Air Temperature
+    16,                       !- Zone Cooling Design Supply Air Temperature
     ,                         !- Zone Cooling Design Supply Air Temperature Difference
     SupplyAirTemperature,     !- Zone Heating Design Supply Air Temperature Input Method
-    35.0,                     !- Zone Heating Design Supply Air Temperature
+    35,                       !- Zone Heating Design Supply Air Temperature
     ,                         !- Zone Heating Design Supply Air Temperature Difference
     0.009,                    !- Zone Cooling Design Supply Air Humidity Ratio
     0.004,                    !- Zone Heating Design Supply Air Humidity Ratio
     SZ DSOA SPACE1-1,         !- Design Specification Outdoor Air Object Name
-    0.0,                      !- Zone Heating Sizing Factor
-    0.0,                      !- Zone Cooling Sizing Factor
+    0,                        !- Zone Heating Sizing Factor
+    0,                        !- Zone Cooling Sizing Factor
     DesignDay,                !- Cooling Design Air Flow Method
-    0.0,                      !- Cooling Design Air Flow Rate
+    0,                        !- Cooling Design Air Flow Rate
     ,                         !- Cooling Minimum Air Flow per Zone Floor Area
     ,                         !- Cooling Minimum Air Flow
     ,                         !- Cooling Minimum Air Flow Fraction
     DesignDay,                !- Heating Design Air Flow Method
-    0.0,                      !- Heating Design Air Flow Rate
+    0,                        !- Heating Design Air Flow Rate
     ,                         !- Heating Maximum Air Flow per Zone Floor Area
     ,                         !- Heating Maximum Air Flow
     ,                         !- Heating Maximum Air Flow Fraction
@@ -2308,23 +2303,23 @@ Sizing:Zone,
 Sizing:Zone,
     SPACE2-1,                 !- Zone or ZoneList Name
     SupplyAirTemperature,     !- Zone Cooling Design Supply Air Temperature Input Method
-    16.0,                     !- Zone Cooling Design Supply Air Temperature
+    16,                       !- Zone Cooling Design Supply Air Temperature
     ,                         !- Zone Cooling Design Supply Air Temperature Difference
     SupplyAirTemperature,     !- Zone Heating Design Supply Air Temperature Input Method
-    35.0,                     !- Zone Heating Design Supply Air Temperature
+    35,                       !- Zone Heating Design Supply Air Temperature
     ,                         !- Zone Heating Design Supply Air Temperature Difference
     0.009,                    !- Zone Cooling Design Supply Air Humidity Ratio
     0.004,                    !- Zone Heating Design Supply Air Humidity Ratio
     SZ DSOA SPACE2-1,         !- Design Specification Outdoor Air Object Name
-    0.0,                      !- Zone Heating Sizing Factor
-    0.0,                      !- Zone Cooling Sizing Factor
+    0,                        !- Zone Heating Sizing Factor
+    0,                        !- Zone Cooling Sizing Factor
     DesignDay,                !- Cooling Design Air Flow Method
-    0.0,                      !- Cooling Design Air Flow Rate
+    0,                        !- Cooling Design Air Flow Rate
     ,                         !- Cooling Minimum Air Flow per Zone Floor Area
     ,                         !- Cooling Minimum Air Flow
     ,                         !- Cooling Minimum Air Flow Fraction
     DesignDay,                !- Heating Design Air Flow Method
-    0.0,                      !- Heating Design Air Flow Rate
+    0,                        !- Heating Design Air Flow Rate
     ,                         !- Heating Maximum Air Flow per Zone Floor Area
     ,                         !- Heating Maximum Air Flow
     ,                         !- Heating Maximum Air Flow Fraction
@@ -2337,23 +2332,23 @@ Sizing:Zone,
 Sizing:Zone,
     SPACE3-1,                 !- Zone or ZoneList Name
     SupplyAirTemperature,     !- Zone Cooling Design Supply Air Temperature Input Method
-    16.0,                     !- Zone Cooling Design Supply Air Temperature
+    16,                       !- Zone Cooling Design Supply Air Temperature
     ,                         !- Zone Cooling Design Supply Air Temperature Difference
     SupplyAirTemperature,     !- Zone Heating Design Supply Air Temperature Input Method
-    35.0,                     !- Zone Heating Design Supply Air Temperature
+    35,                       !- Zone Heating Design Supply Air Temperature
     ,                         !- Zone Heating Design Supply Air Temperature Difference
     0.009,                    !- Zone Cooling Design Supply Air Humidity Ratio
     0.004,                    !- Zone Heating Design Supply Air Humidity Ratio
     SZ DSOA SPACE3-1,         !- Design Specification Outdoor Air Object Name
-    0.0,                      !- Zone Heating Sizing Factor
-    0.0,                      !- Zone Cooling Sizing Factor
+    0,                        !- Zone Heating Sizing Factor
+    0,                        !- Zone Cooling Sizing Factor
     DesignDay,                !- Cooling Design Air Flow Method
-    0.0,                      !- Cooling Design Air Flow Rate
+    0,                        !- Cooling Design Air Flow Rate
     ,                         !- Cooling Minimum Air Flow per Zone Floor Area
     ,                         !- Cooling Minimum Air Flow
     ,                         !- Cooling Minimum Air Flow Fraction
     DesignDay,                !- Heating Design Air Flow Method
-    0.0,                      !- Heating Design Air Flow Rate
+    0,                        !- Heating Design Air Flow Rate
     ,                         !- Heating Maximum Air Flow per Zone Floor Area
     ,                         !- Heating Maximum Air Flow
     ,                         !- Heating Maximum Air Flow Fraction
@@ -2366,23 +2361,23 @@ Sizing:Zone,
 Sizing:Zone,
     SPACE4-1,                 !- Zone or ZoneList Name
     SupplyAirTemperature,     !- Zone Cooling Design Supply Air Temperature Input Method
-    16.0,                     !- Zone Cooling Design Supply Air Temperature
+    16,                       !- Zone Cooling Design Supply Air Temperature
     ,                         !- Zone Cooling Design Supply Air Temperature Difference
     SupplyAirTemperature,     !- Zone Heating Design Supply Air Temperature Input Method
-    35.0,                     !- Zone Heating Design Supply Air Temperature
+    35,                       !- Zone Heating Design Supply Air Temperature
     ,                         !- Zone Heating Design Supply Air Temperature Difference
     0.009,                    !- Zone Cooling Design Supply Air Humidity Ratio
     0.004,                    !- Zone Heating Design Supply Air Humidity Ratio
     SZ DSOA SPACE4-1,         !- Design Specification Outdoor Air Object Name
-    0.0,                      !- Zone Heating Sizing Factor
-    0.0,                      !- Zone Cooling Sizing Factor
+    0,                        !- Zone Heating Sizing Factor
+    0,                        !- Zone Cooling Sizing Factor
     DesignDay,                !- Cooling Design Air Flow Method
-    0.0,                      !- Cooling Design Air Flow Rate
+    0,                        !- Cooling Design Air Flow Rate
     ,                         !- Cooling Minimum Air Flow per Zone Floor Area
     ,                         !- Cooling Minimum Air Flow
     ,                         !- Cooling Minimum Air Flow Fraction
     DesignDay,                !- Heating Design Air Flow Method
-    0.0,                      !- Heating Design Air Flow Rate
+    0,                        !- Heating Design Air Flow Rate
     ,                         !- Heating Maximum Air Flow per Zone Floor Area
     ,                         !- Heating Maximum Air Flow
     ,                         !- Heating Maximum Air Flow Fraction
@@ -2395,23 +2390,23 @@ Sizing:Zone,
 Sizing:Zone,
     SPACE5-1,                 !- Zone or ZoneList Name
     SupplyAirTemperature,     !- Zone Cooling Design Supply Air Temperature Input Method
-    16.0,                     !- Zone Cooling Design Supply Air Temperature
+    16,                       !- Zone Cooling Design Supply Air Temperature
     ,                         !- Zone Cooling Design Supply Air Temperature Difference
     SupplyAirTemperature,     !- Zone Heating Design Supply Air Temperature Input Method
-    35.0,                     !- Zone Heating Design Supply Air Temperature
+    35,                       !- Zone Heating Design Supply Air Temperature
     ,                         !- Zone Heating Design Supply Air Temperature Difference
     0.009,                    !- Zone Cooling Design Supply Air Humidity Ratio
     0.004,                    !- Zone Heating Design Supply Air Humidity Ratio
     SZ DSOA SPACE5-1,         !- Design Specification Outdoor Air Object Name
-    0.0,                      !- Zone Heating Sizing Factor
-    0.0,                      !- Zone Cooling Sizing Factor
+    0,                        !- Zone Heating Sizing Factor
+    0,                        !- Zone Cooling Sizing Factor
     DesignDay,                !- Cooling Design Air Flow Method
-    0.0,                      !- Cooling Design Air Flow Rate
+    0,                        !- Cooling Design Air Flow Rate
     ,                         !- Cooling Minimum Air Flow per Zone Floor Area
     ,                         !- Cooling Minimum Air Flow
     ,                         !- Cooling Minimum Air Flow Fraction
     DesignDay,                !- Heating Design Air Flow Method
-    0.0,                      !- Heating Design Air Flow Rate
+    0,                        !- Heating Design Air Flow Rate
     ,                         !- Heating Maximum Air Flow per Zone Floor Area
     ,                         !- Heating Maximum Air Flow
     ,                         !- Heating Maximum Air Flow Fraction
@@ -2425,31 +2420,31 @@ Sizing:System,
     VAV Sys 1,                !- AirLoop Name
     sensible,                 !- Type of Load to Size On
     autosize,                 !- Design Outdoor Air Flow Rate
-    1.0,                      !- Central Heating Maximum System Air Flow Ratio
-    -15.0,                    !- Preheat Design Temperature
+    1,                        !- Central Heating Maximum System Air Flow Ratio
+    -15,                      !- Preheat Design Temperature
     0.008,                    !- Preheat Design Humidity Ratio
-    30.0,                     !- Precool Design Temperature
+    30,                       !- Precool Design Temperature
     0.008,                    !- Precool Design Humidity Ratio
-    12.0,                     !- Central Cooling Design Supply Air Temperature
-    18.0,                     !- Central Heating Design Supply Air Temperature
+    12,                       !- Central Cooling Design Supply Air Temperature
+    18,                       !- Central Heating Design Supply Air Temperature
     noncoincident,            !- Type of Zone Sum to Use
     no,                       !- 100 Outdoor Air in Cooling
     no,                       !- 100 Outdoor Air in Heating
     0.009,                    !- Central Cooling Design Supply Air Humidity Ratio
     0.009,                    !- Central Heating Design Supply Air Humidity Ratio
     DesignDay,                !- Cooling Supply Air Flow Rate Method
-    0.0,                      !- Cooling Supply Air Flow Rate
+    0,                        !- Cooling Supply Air Flow Rate
     ,                         !- Cooling Supply Air Flow Rate Per Floor Area
     ,                         !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
     ,                         !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity
     DesignDay,                !- Heating Supply Air Flow Rate Method
-    0.0,                      !- Heating Supply Air Flow Rate
+    0,                        !- Heating Supply Air Flow Rate
     ,                         !- Heating Supply Air Flow Rate Per Floor Area
     ,                         !- Heating Fraction of Autosized Heating Supply Air Flow Rate
     ,                         !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
     ,                         !- Heating Supply Air Flow Rate Per Unit Heating Capacity
     ,                         !- System Outdoor Air Method
-    1.0,                      !- Zone Maximum Outdoor Air Fraction
+    1,                        !- Zone Maximum Outdoor Air Fraction
     CoolingDesignCapacity,    !- Cooling Design Capacity Method
     autosize,                 !- Cooling Design Capacity
     ,                         !- Cooling Design Capacity Per Floor Area
@@ -2548,8 +2543,8 @@ AirTerminal:SingleDuct:VAV:Reheat,
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
     SPACE1-1 Zone Coil,       !- Reheat Coil Name
-    0.0,                      !- Maximum Hot Water or Steam Flow Rate
-    0.0,                      !- Minimum Hot Water or Steam Flow Rate
+    0,                        !- Maximum Hot Water or Steam Flow Rate
+    0,                        !- Minimum Hot Water or Steam Flow Rate
     SPACE1-1 In Node,         !- Air Outlet Node Name
     0.001,                    !- Convergence Tolerance
     Normal,                   !- Damper Heating Action
@@ -2570,8 +2565,8 @@ AirTerminal:SingleDuct:VAV:Reheat,
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
     SPACE2-1 Zone Coil,       !- Reheat Coil Name
-    0.0,                      !- Maximum Hot Water or Steam Flow Rate
-    0.0,                      !- Minimum Hot Water or Steam Flow Rate
+    0,                        !- Maximum Hot Water or Steam Flow Rate
+    0,                        !- Minimum Hot Water or Steam Flow Rate
     SPACE2-1 In Node,         !- Air Outlet Node Name
     0.001,                    !- Convergence Tolerance
     Normal,                   !- Damper Heating Action
@@ -2592,8 +2587,8 @@ AirTerminal:SingleDuct:VAV:Reheat,
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
     SPACE3-1 Zone Coil,       !- Reheat Coil Name
-    0.0,                      !- Maximum Hot Water or Steam Flow Rate
-    0.0,                      !- Minimum Hot Water or Steam Flow Rate
+    0,                        !- Maximum Hot Water or Steam Flow Rate
+    0,                        !- Minimum Hot Water or Steam Flow Rate
     SPACE3-1 In Node,         !- Air Outlet Node Name
     0.001,                    !- Convergence Tolerance
     Normal,                   !- Damper Heating Action
@@ -2614,8 +2609,8 @@ AirTerminal:SingleDuct:VAV:Reheat,
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
     SPACE4-1 Zone Coil,       !- Reheat Coil Name
-    0.0,                      !- Maximum Hot Water or Steam Flow Rate
-    0.0,                      !- Minimum Hot Water or Steam Flow Rate
+    0,                        !- Maximum Hot Water or Steam Flow Rate
+    0,                        !- Minimum Hot Water or Steam Flow Rate
     SPACE4-1 In Node,         !- Air Outlet Node Name
     0.001,                    !- Convergence Tolerance
     Normal,                   !- Damper Heating Action
@@ -2636,8 +2631,8 @@ AirTerminal:SingleDuct:VAV:Reheat,
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
     SPACE5-1 Zone Coil,       !- Reheat Coil Name
-    0.0,                      !- Maximum Hot Water or Steam Flow Rate
-    0.0,                      !- Minimum Hot Water or Steam Flow Rate
+    0,                        !- Maximum Hot Water or Steam Flow Rate
+    0,                        !- Minimum Hot Water or Steam Flow Rate
     SPACE5-1 In Node,         !- Air Outlet Node Name
     0.001,                    !- Convergence Tolerance
     Normal,                   !- Damper Heating Action
@@ -2770,18 +2765,18 @@ Fan:VariableVolume,
     Supply Fan 1,             !- Name
     FanAvailSched,            !- Availability Schedule Name
     0.7,                      !- Fan Total Efficiency
-    600.0,                    !- Pressure Rise
+    600,                      !- Pressure Rise
     autosize,                 !- Maximum Flow Rate
     Fraction,                 !- Fan Power Minimum Flow Rate Input Method
     0.25,                     !- Fan Power Minimum Flow Fraction
     ,                         !- Fan Power Minimum Air Flow Rate
     0.9,                      !- Motor Efficiency
-    1.0,                      !- Motor In Airstream Fraction
+    1,                        !- Motor In Airstream Fraction
     0.0015302446,             !- Fan Power Coefficient 1
     0.0052080574,             !- Fan Power Coefficient 2
     1.1086242,                !- Fan Power Coefficient 3
     -0.11635563,              !- Fan Power Coefficient 4
-    0.0,                      !- Fan Power Coefficient 5
+    0,                        !- Fan Power Coefficient 5
     Main Heating Coil 1 Outlet Node,    !- Air Inlet Node Name
     VAV Sys 1 Outlet Node;    !- Air Outlet Node Name
 
@@ -2790,9 +2785,9 @@ Coil:Cooling:DX:TwoSpeed,
     CoolingCoilAvailSched,    !- Availability Schedule Name
     autosize,                 !- High Speed Gross Rated Total Cooling Capacity
     autosize,                 !- High Speed Rated Sensible Heat Ratio
-    3.0,                      !- High Speed Gross Rated Cooling COP
+    3,                        !- High Speed Gross Rated Cooling COP
     autosize,                 !- High Speed Rated Air Flow Rate
-    450.0,                    !- Unit Internal Static Air Pressure
+    450,                      !- Unit Internal Static Air Pressure
     Mixed Air Node 1,         !- Air Inlet Node Name
     Main Cooling Coil 1 Outlet Node,    !- Air Outlet Node Name
     VarSpeedCoolCapFT,        !- Total Cooling Capacity Function of Temperature Curve Name
@@ -2817,8 +2812,8 @@ Coil:Cooling:DX:TwoSpeed,
     ,                         !- Low Speed Evaporative Condenser Pump Rated Power Consumption
     ,                         !- Supply Water Storage Tank Name
     ,                         !- Condensate Collection Water Storage Tank Name
-    200.0,                    !- Basin Heater Capacity
-    2.0,                      !- Basin Heater Setpoint Temperature
+    200,                      !- Basin Heater Capacity
+    2,                        !- Basin Heater Setpoint Temperature
     BasinHeaterSched;         !- Basin Heater Operating Schedule Name
 
 Coil:Heating:Electric,
@@ -2889,11 +2884,11 @@ Controller:OutdoorAir,
     autosize,                 !- Maximum Outdoor Air Flow Rate
     FixedDryBulb,             !- Economizer Control Type
     ModulateFlow,             !- Economizer Control Action Type
-    25.0,                     !- Economizer Maximum Limit DryBulb Temperature
+    25,                       !- Economizer Maximum Limit DryBulb Temperature
     ,                         !- Economizer Maximum Limit Enthalpy
     ,                         !- Economizer Maximum Limit Dewpoint Temperature
     ,                         !- Electronic Enthalpy Limit Curve Name
-    4.0,                      !- Economizer Minimum Limit DryBulb Temperature
+    4,                        !- Economizer Minimum Limit DryBulb Temperature
     NoLockout,                !- Lockout Type
     ProportionalMinimum,      !- Minimum Limit Type
     Min OA Sched;             !- Minimum Outdoor Air Schedule Name
@@ -3026,7 +3021,7 @@ NodeList,
 
 OutdoorAir:Node,
     Main Cooling Coil 1 Condenser Node,    !- Name
-    -1.0;                     !- Height Above Ground
+    -1;                       !- Height Above Ground
 
 OutdoorAir:NodeList,
     OutsideAirInletNodes;     !- Node or NodeList Name 1
@@ -3214,12 +3209,6 @@ AvailabilityManagerAssignmentList,
     AvailabilityManager:Scheduled,    !- Availability Manager 1 Object Type
     VAV Sys 1 Avail;          !- Availability Manager 1 Name
 
-SetpointManager:Scheduled,
-    Supply Air Temp Manager 1,    !- Name
-    Temperature,              !- Control Variable
-    SAT_SP,                   !- Schedule Name
-    VAV Sys 1 Outlet Node;    !- Setpoint Node or NodeList Name
-
 SetpointManager:MixedAir,
     Mixed Air and Coil Exit Temp Manager 1,    !- Name
     Temperature,              !- Control Variable
@@ -3228,13 +3217,20 @@ SetpointManager:MixedAir,
     VAV Sys 1 Outlet Node,    !- Fan Outlet Node Name
     Supply Fan Upstream Nodes;    !- Setpoint Node or NodeList Name
 
+SetpointManager:MultiZone:Heating:Average,
+    Supply Air Temp Manager 1,    !- Name
+    VAV Sys 1,                !- HVAC Air Loop Name
+    12,                       !- Minimum Setpoint Temperature
+    36,                       !- Maximum Setpoint Temperature
+    Supply Air Temp Nodes 1;    !- Setpoint Node or NodeList Name
+
 Curve:Quadratic,
     VarSpeedCyclingPLFFPLR,    !- Name
     0.85,                     !- Coefficient1 Constant
     0.15,                     !- Coefficient2 x
-    0.0,                      !- Coefficient3 x2
-    0.0,                      !- Minimum Value of x
-    1.0;                      !- Maximum Value of x
+    0,                        !- Coefficient3 x2
+    0,                        !- Minimum Value of x
+    1;                        !- Maximum Value of x
 
 Curve:Cubic,
     PackagedRatedCoolCapFFlow,    !- Name

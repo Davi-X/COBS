@@ -26,13 +26,13 @@ class Reward:
 
     def __init__(self):
         self.zones = list()
-        self.energy_consum = 0
+        self.electricity = 0
         self.thermal_comfort = 0
         self.value = 0
 
     def reward(self, state):
         self.zones = list(state['Lights'].keys())
-        lights_elect = 0
+        lights = 0
         thermal_num = 0
         den = 0
 
@@ -52,12 +52,16 @@ class Reward:
 
             if zone == "Core_bottom" or zone == "Core_mid" or zone == "Core_top":
                 continue
-            lights_elect += state['Lights'][zone]
+            lights += state['Lights'][zone]
 
-        self.energy_consum = state["HVAC Power"] + lights_elect
+        chillers = state["Chiller 1 Electricity"] + state["Chiller 2 Electricity"]
+        pumps = state["CoolSys Pump Electricity"] + state["HeatSys Pump Electricity"] + \
+                state["Water Heating Pump Electricity"] + state["Water Tower Pump Electricity"]
+
+        self.electricity = state["All AHUs'Fan Power"] + chillers + pumps + state['Cool Tower Fan Electricity'] + lights
         if den != 0:
             self.thermal_comfort = thermal_num / den
-        self.value = self.energy_consum + self.thermal_comfort
+        self.value = -self.electricity - self.thermal_comfort
         # print(self.value)
         return self.value
 
@@ -142,6 +146,7 @@ class Model:
         self.total_timestep = -1
         self.leap_weather = False
         self.state_modifier = StateModifier()
+        self.state_history = []
 
         # TODO: Validate input parameters
 
@@ -435,8 +440,8 @@ class Model:
                 continue
             # print("Child: Simulating 2")
             current_state["temperature"][name] = self.api.exchange.get_variable_value(handle)
-        handle = self.api.exchange.get_meter_handle("Heating:EnergyTransfer")
-        current_state["energy"] = self.api.exchange.get_meter_value(handle)
+        # handle = self.api.exchange.get_meter_handle("Heating:EnergyTransfer")
+        # current_state["energy"] = self.api.exchange.get_meter_value(handle)
         if self.reward is not None:
             current_state["reward"] = self.prev_reward
 
@@ -466,6 +471,18 @@ class Model:
                 if handle == -1:
                     continue
                 current_state["Lights"][self.thermal_names[zone]] = self.api.exchange.get_variable_value(handle)
+
+        # if "Site Diffuse Solar Radiation Rate per Area" in self.get_available_names_under_group("Output:Variable") and \
+        #         "Site Direct Solar Radiation Rate per Area" in self.get_available_names_under_group("Output:Variable"):
+        #     handle1 = self.api.exchange.get_variable_handle("Site Diffuse Solar Radiation Rate per Area", "Environment")
+        #     handle2 = self.api.exchange.get_variable_handle("Site Direct Solar Radiation Rate per Area", "Environment")
+        #     diffuse = direct = 0
+        #     if handle1 != -1:
+        #         diffuse = self.api.exchange.get_variable_value(handle1)
+        #     if handle2 != -1:
+        #         direct = self.api.exchange.get_variable_value(handle2)
+        #     current_state['Diff. solar'] = diffuse
+        #     current_state['Direct solar'] = direct
 
         # Add state values
         state_vars = self.get_current_state_variables()
@@ -515,6 +532,7 @@ class Model:
                                  self.queue.get_event(self.current_state["timestep"]),
                                  current_state,
                                  current_state["terminate"])
+                # print("Callback: ", self.replay.buffer)
             self.current_state = current_state
             # self.historical_values.append(self.current_state)
             events = self.queue.trigger(self.counter)
@@ -582,6 +600,8 @@ class Model:
                          self.queue.get_event(self.current_state["timestep"]),
                          current_state,
                          current_state["terminate"])
+        # print("Step: ", self.replay.buffer[0])
+        self.save_extended_history(current_state)
         self.current_state = current_state
         # self.historical_values.append(self.current_state)
         if current_state["terminate"]:
@@ -860,7 +880,9 @@ class Model:
 
         :return: None
         """
-        year = self.api.exchange.year()
+        # As the DOE file are from 1991, the api exchange year is from weather file
+        # TODO set year as a parameter
+        year = 1991
         month = self.api.exchange.month()
         day = self.api.exchange.day_of_month()
         hour = self.api.exchange.hour()
@@ -1111,3 +1133,6 @@ class Model:
         for i, row in next_state:
             next_state[i] = self.flatten_state(order, row)
         return state, action, next_state, done
+
+    def save_extended_history(self, curr_state):
+        self.state_history.append(curr_state)

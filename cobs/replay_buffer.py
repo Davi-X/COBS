@@ -43,7 +43,7 @@ class ReplayBuffer:
         prev_state = {key: prev_state[key] for key in self.save_set}
         current_state = {key: current_state[key] for key in self.save_set}
 
-        self.buffer[self.position] = (prev_state, prev_action, current_state, done)
+        self.buffer[self.position] = (prev_state, prev_action, current_state['reward'], current_state, done)
         self.position += 1
         if self.capacity:
             self.position %= self.capacity
@@ -53,11 +53,11 @@ class ReplayBuffer:
         Sample some experiences from the buffer.
 
         :param batch_size: Number of steps to sample.
-        :return: four lists for ``previous_state``, ``action``, ``resulting_state``, ``terminate``, respectively.
+        :return: four lists for ``previous_state``, ``action``, ``reward``, ``resulting_state``, ``terminate``, respectively.
         """
         batch = random.sample(self.buffer, batch_size)
-        state, action, next_state, done = map(np.stack, zip(*batch))
-        return state, action, next_state, done
+        state, action, reward, next_state, done = map(np.stack, zip(*batch))
+        return state, action, reward, next_state, done
 
     def save(self, num):
         """
