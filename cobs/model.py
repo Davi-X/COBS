@@ -54,11 +54,12 @@ class Reward:
                 continue
             lights += state['Lights'][zone]
 
-        chillers = state["Chiller 1 Electricity"] + state["Chiller 2 Electricity"]
-        pumps = state["CoolSys Pump Electricity"] + state["HeatSys Pump Electricity"] + \
-                state["Water Heating Pump Electricity"] + state["Water Tower Pump Electricity"]
-
-        self.electricity = state["All AHUs'Fan Power"] + chillers + pumps + state['Cool Tower Fan Electricity'] + lights
+        # chillers = state["Chiller 1 Electricity"] + state["Chiller 2 Electricity"]
+        # pumps = state["CoolSys Pump Electricity"] + state["HeatSys Pump Electricity"] + \
+        #         state["Water Heating Pump Electricity"] + state["Water Tower Pump Electricity"]
+        #
+        # self.electricity = state["All AHUs'Fan Power"] + chillers + pumps + state['Cool Tower Fan Electricity'] + lights
+        self.electricity = state['HVAC Power'] + lights
         if den != 0:
             self.thermal_comfort = thermal_num / den
         self.value = -self.electricity - self.thermal_comfort
@@ -463,11 +464,11 @@ class Model:
                     continue
                 current_state["PPD"][self.thermal_names[zone]] = self.api.exchange.get_variable_value(handle)
 
-        if "Lights Electric Power" in self.get_available_names_under_group("Output:Variable"):
+        if "Lights Electric Energy" in self.get_available_names_under_group("Output:Variable"):
             current_state["Lights"] = dict()
             for zone in self.thermal_names:
                 key = self.thermal_names[zone] + '_LIGHTS'
-                handle = self.api.exchange.get_variable_handle("Lights Electric Power", key)
+                handle = self.api.exchange.get_variable_handle("Lights Electric Energy", key)
                 if handle == -1:
                     continue
                 current_state["Lights"][self.thermal_names[zone]] = self.api.exchange.get_variable_value(handle)
@@ -602,6 +603,7 @@ class Model:
                          current_state["terminate"])
         # print("Step: ", self.replay.buffer[0])
         self.save_extended_history(current_state)
+        print(self.state_history)
         self.current_state = current_state
         # self.historical_values.append(self.current_state)
         if current_state["terminate"]:
@@ -647,6 +649,7 @@ class Model:
         self.current_state = self.parent.recv()
         # self.historical_values.append(self.current_state)
         self.wait_for_state.clear()
+        self.save_extended_history(self.current_state)
         return self.current_state
 
     def get_total_timestep(self):
@@ -702,6 +705,7 @@ class Model:
             self.api.runtime.callback_begin_system_timestep_before_predictor(self._step_callback)
         else:
             self.api.runtime.callback_begin_new_environment(self._generate_output_files)
+        print(self.run_parameters)
         self.api.runtime.run_energyplus(self.run_parameters)
         # if self.use_lock:
         #     self.child_energy.send("Terminated")
@@ -720,6 +724,31 @@ class Model:
         except KeyError:
             self.add_configuration("Output:Variable", {"Key Value": '*',
                                                        "Variable Name": "Zone People Occupant Count",
+                                                       "Reporting Frequency": "Timestep"})
+        try:
+            self.get_configuration("Output:Variable", "Zone Air Temperature")
+        except KeyError:
+            self.add_configuration("Output:Variable", {"Key Value": '*',
+                                                       "Variable Name": "Zone Air Temperature",
+                                                       "Reporting Frequency": "Timestep"})
+        try:
+            self.get_configuration("Output:Variable", "Zone Thermal Comfort Fanger Model PPD")
+        except KeyError:
+            self.add_configuration("Output:Variable", {"Key Value": '*',
+                                                       "Variable Name": "Zone Thermal Comfort Fanger Model PPD",
+                                                       "Reporting Frequency": "Timestep"})
+        try:
+            self.get_configuration("Output:Variable", "Zone Thermal Comfort Fanger Model PMV")
+        except KeyError:
+            self.add_configuration("Output:Variable", {"Key Value": '*',
+                                                       "Variable Name": "Zone Thermal Comfort Fanger Model PMV",
+                                                       "Reporting Frequency": "Timestep"})
+
+        try:
+            self.get_configuration("Output:Variable", "Facility Total HVAC Electric Demand Power")
+        except KeyError:
+            self.add_configuration("Output:Variable", {"Key Value": '*',
+                                                       "Variable Name": "Facility Total HVAC Electric Demand Power",
                                                        "Reporting Frequency": "Timestep"})
         self.idf.saveas(self.input_idf)
         self.use_lock = False

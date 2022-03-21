@@ -40,7 +40,7 @@ ZoneAirHeatBalanceAlgorithm,
     AnalyticalSolution;       !- Algorithm
 
 Timestep,
-    1;                        !- Number of Timesteps per Hour
+    4;                        !- Number of Timesteps per Hour
 
 ConvergenceLimits,
     2,                        !- Minimum System Timestep
@@ -10586,6 +10586,16 @@ OutputControl:ReportingTolerances,
 
 Output:Variable,
     *,                        !- Key Value
+    Cooling Tower Fan Electric Energy,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Electric Equipment Electric Energy,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
     Site Outdoor Air Relative Humidity,    !- Variable Name
     Hourly;                   !- Reporting Frequency
 
@@ -10646,16 +10656,6 @@ Output:Variable,
 
 Output:Variable,
     *,                        !- Key Value
-    Zone Air Terminal Sensible Heating Energy,    !- Variable Name
-    Hourly;                   !- Reporting Frequency
-
-Output:Variable,
-    *,                        !- Key Value
-    Zone Air Terminal Sensible Cooling Energy,    !- Variable Name
-    Hourly;                   !- Reporting Frequency
-
-Output:Variable,
-    *,                        !- Key Value
     Zone Air Terminal VAV Damper Position,    !- Variable Name
     Hourly;                   !- Reporting Frequency
 
@@ -10707,16 +10707,6 @@ Output:Variable,
 Output:Variable,
     *,                        !- Key Value
     Boiler Outlet Temperature,    !- Variable Name
-    HOURLY;                   !- Reporting Frequency
-
-Output:Variable,
-    *,                        !- Key Value
-    Boiler Part Load Ratio,    !- Variable Name
-    HOURLY;                   !- Reporting Frequency
-
-Output:Variable,
-    *,                        !- Key Value
-    Chiller Part Load Ratio,    !- Variable Name
     HOURLY;                   !- Reporting Frequency
 
 Output:Variable,

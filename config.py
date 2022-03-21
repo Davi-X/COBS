@@ -1,7 +1,7 @@
 from utils.ActionCreator import ActionCreator
 SatAction = ActionCreator("Schedule:Compact", "Schedule Value", "SEASONAL-RESET-SUPPLY-AIR-TEMP-SCH")
 
-zones = ['Basement', 'Core_bottom', 'Core_mid', 'Core_top',
+zones = ['Core_bottom', 'Core_mid', 'Core_top',
          'Perimeter_bot_ZN_1', 'Perimeter_bot_ZN_2', 'Perimeter_bot_ZN_3', 'Perimeter_bot_ZN_4',
          'Perimeter_mid_ZN_1', 'Perimeter_mid_ZN_2', 'Perimeter_mid_ZN_3', 'Perimeter_mid_ZN_4',
          'Perimeter_top_ZN_1', 'Perimeter_top_ZN_2', 'Perimeter_top_ZN_3', 'Perimeter_top_ZN_4']
@@ -11,81 +11,50 @@ zones = ['Basement', 'Core_bottom', 'Core_mid', 'Core_top',
 #               'Ambient Temp.']
 state_names = ['time', {'temperature': zones}]
 
+zone_vars = ["Zone Air Temperature", "Lights Electric Energy",
+             "Zone Thermal Comfort Fanger Model PPD",
+             "Zone Thermal Comfort Fanger Model PMV",
+             "Facility Total HVAC Electric Demand Power"]
+
+dist_vars = ["Site Wind Speed", "Site Wind Direction",
+             "Site Diffuse Solar Radiation Rate per Area",
+             "Site Direct Solar Radiation Rate per Area"]
+
 eplus_naming_dict = {
+    # Environmental Disturbances
     ('Site Outdoor Air Drybulb Temperature', '*'): "Ambient Temp.",
     ('Site Outdoor Air Relative Humidity', '*'): "Outdoor RH",
     ('Site Diffuse Solar Radiation Rate per Area', '*'): "Diffuse Solar Rad.",
     ('Site Direct Solar Radiation Rate per Area', '*'): "Direct Solar Rad.",
     ('Site Wind Speed', '*'): "Wind Speed",
     ('Site Wind Direction', '*'): "Wind Direction",
-    # ('Occupancy Flag', '*'): "Occupancy Flag",
-    # ('Building Mean Temperature', '*'): "Indoor Mean Temp.",
-    # ('Building Mean PPD', '*'): "Indoor Mean PPD",
-    ('Chiller Electric Energy', 'COOLSYS1 CHILLER 1'): "Chiller 1 Electricity",
-    ('Chiller Electric Energy', 'COOLSYS1 CHILLER 2'): "Chiller 2 Electricity",
-
-    ('Facility Total HVAC Electric Demand Power', '*'): "All AHUs'Fan Power",
-
-    ('Cooling Tower Fan Electric Energy', 'TOWERWATERSYS COOLTOWER'): 'Cool Tower Fan Electricity',
-    ('Pump Electric Energy', 'COOLSYS1 PUMP'): 'CoolSys Pump Electricity',
-    ('Pump Electric Energy', 'HEATSYS1 PUMP'): 'HeatSys Pump Electricity',
-    ('Pump Electric Energy', 'SWHSYS1 PUMP'): 'Water Heating Pump Electricity',
-    ('Pump Electric Energy', 'TOWERWATERSYS PUMP'): 'Water Tower Pump Electricity',
-    # ('System Node Temperature', 'VAV SYS 1 OUTLET NODE'): "Sys Out Temp.",
-    # ('Heating Coil Electric Power', 'Main Heating Coil 1'): "Heat Coil Power",
-    # ('Cooling Coil Electric Power', 'Main Cooling Coil 1'): "Cool Coil Power",
-    # ('Occupancy Flag', '*'): "Occupancy Flag",
-    ('System Node Temperature', 'VAV_1_OA-VAV_1_CoolCNode'): "VAV1 MA Temp.",
-    ('System Node Temperature', 'VAV_2_OA-VAV_2_CoolCNode'): "VAV2 MA Temp.",
-    ('System Node Temperature', 'VAV_3_OA-VAV_3_CoolCNode'): "VAV3 MA Temp.",
-    ('System Node Temperature', 'VAV_5_OA-VAV_5_CoolCNode'): "VAV5 MA Temp.",
-    # ('Indoor Air Temperature Setpoint', '*'): "Indoor Temp. Setpoint",
-    # node outputs
-    # ('System Node Temperature', 'SPACE1-1 IN NODE'): "In Node Temp Zone 1",
-    # ('System Node Temperature', 'SPACE2-1 IN NODE'): "In Node Temp Zone 2",
-    # ('System Node Temperature', 'SPACE3-1 IN NODE'): "In Node Temp Zone 3",
-    # ('System Node Temperature', 'SPACE4-1 IN NODE'): "In Node Temp Zone 4",
-    # ('System Node Temperature', 'SPACE5-1 IN NODE'): "In Node Temp Zone 5",
+    # These are for Large Office reference building
+    # ('Chiller Electric Energy', 'COOLSYS1 CHILLER 1'): "Chiller 1 Electricity",
+    # ('Chiller Electric Energy', 'COOLSYS1 CHILLER 2'): "Chiller 2 Electricity",
     #
-    # ('System Node Mass Flow Rate', 'SPACE1-1 IN NODE'): "In Node Flow Zone 1",
-    # ('System Node Mass Flow Rate', 'SPACE2-1 IN NODE'): "In Node Flow Zone 2",
-    # ('System Node Mass Flow Rate', 'SPACE3-1 IN NODE'): "In Node Flow Zone 3",
-    # ('System Node Mass Flow Rate', 'SPACE4-1 IN NODE'): "In Node Flow Zone 4",
-    # ('System Node Mass Flow Rate', 'SPACE5-1 IN NODE'): "In Node Flow Zone 5",
-    # Power
-    # ('Zone Air Terminal Sensible Cooling Energy', 'BASEMENT VAV BOX'): "Cooling Power Zone 1",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'CORE_BOTTOM VAV BOX'): "Cooling Power Zone 2",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'CORE_MID VAV BOX'): "Cooling Power Zone 3",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'CORE_TOP VAV BOX'): "Cooling Power Zone 4",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'PERIMETER_BOT_ZN_1 VAV BOX'): "Cooling Power Zone 5",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'PERIMETER_BOT_ZN_2 VAV BOX'): "Cooling Power Zone 6",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'PERIMETER_BOT_ZN_3 VAV BOX'): "Cooling Power Zone 7",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'PERIMETER_BOT_ZN_4 VAV BOX'): "Cooling Power Zone 8",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'PERIMETER_MID_ZN_1 VAV BOX'): "Cooling Power Zone 9",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'PERIMETER_MID_ZN_2 VAV BOX'): "Cooling Power Zone 10",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'PERIMETER_MID_ZN_3 VAV BOX'): "Cooling Power Zone 11",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'PERIMETER_MID_ZN_4 VAV BOX'): "Cooling Power Zone 12",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'PERIMETER_TOP_ZN_1 VAV BOX'): "Cooling Power Zone 13",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'PERIMETER_TOP_ZN_2 VAV BOX'): "Cooling Power Zone 14",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'PERIMETER_TOP_ZN_3 VAV BOX'): "Cooling Power Zone 15",
-    # ('Zone Air Terminal Sensible Cooling Energy', 'PERIMETER_TOP_ZN_4 VAV BOX'): "Cooling Power Zone 16",
-    # ('Zone Air Terminal Sensible Heating Energy', 'BASEMENT VAV BOX'): "Heating Power Zone 1",
-    # ('Zone Air Terminal Sensible Heating Energy', 'CORE_BOTTOM VAV BOX'): "Heating Power Zone 2",
-    # ('Zone Air Terminal Sensible Heating Energy', 'CORE_MID VAV BOX'): "Heating Power Zone 3",
-    # ('Zone Air Terminal Sensible Heating Energy', 'CORE_TOP VAV BOX'): "Heating Power Zone 4",
-    # ('Zone Air Terminal Sensible Heating Energy', 'PERIMETER_BOT_ZN_1 VAV BOX'): "Heating Power Zone 5",
-    # ('Zone Air Terminal Sensible Heating Energy', 'PERIMETER_BOT_ZN_2 VAV BOX'): "Heating Power Zone 6",
-    # ('Zone Air Terminal Sensible Heating Energy', 'PERIMETER_BOT_ZN_3 VAV BOX'): "Heating Power Zone 7",
-    # ('Zone Air Terminal Sensible Heating Energy', 'PERIMETER_BOT_ZN_4 VAV BOX'): "Heating Power Zone 8",
-    # ('Zone Air Terminal Sensible Heating Energy', 'PERIMETER_MID_ZN_1 VAV BOX'): "Heating Power Zone 9",
-    # ('Zone Air Terminal Sensible Heating Energy', 'PERIMETER_MID_ZN_2 VAV BOX'): "Heating Power Zone 10",
-    # ('Zone Air Terminal Sensible Heating Energy', 'PERIMETER_MID_ZN_3 VAV BOX'): "Heating Power Zone 11",
-    # ('Zone Air Terminal Sensible Heating Energy', 'PERIMETER_MID_ZN_4 VAV BOX'): "Heating Power Zone 12",
-    # ('Zone Air Terminal Sensible Heating Energy', 'PERIMETER_TOP_ZN_1 VAV BOX'): "Heating Power Zone 13",
-    # ('Zone Air Terminal Sensible Heating Energy', 'PERIMETER_TOP_ZN_2 VAV BOX'): "Heating Power Zone 14",
-    # ('Zone Air Terminal Sensible Heating Energy', 'PERIMETER_TOP_ZN_3 VAV BOX'): "Heating Power Zone 15",
-    # ('Zone Air Terminal Sensible Heating Energy', 'PERIMETER_TOP_ZN_4 VAV BOX'): "Heating Power Zone 16",
-    # ("Fan Electric Power", "Supply Fan 1"): "Fan Power",
+    # ('Facility Total HVAC Electric Demand Power', '*'): "All AHUs'Fan Power",
+    #
+    # ('Cooling Tower Fan Electric Energy', 'TOWERWATERSYS COOLTOWER'): 'Cool Tower Fan Electricity',
+    # ('Pump Electric Energy', 'COOLSYS1 PUMP'): 'CoolSys Pump Electricity',
+    # ('Pump Electric Energy', 'HEATSYS1 PUMP'): 'HeatSys Pump Electricity',
+    # ('Pump Electric Energy', 'SWHSYS1 PUMP'): 'Water Heating Pump Electricity',
+    # ('Pump Electric Energy', 'TOWERWATERSYS PUMP'): 'Water Tower Pump Electricity',
+
+    # ('Boiler Ancillary Electric Energy', 'HEATSYS1 BOILER'): "Boiler Cost",
+    # ('Heating Coil Heating Energy', '*'): "Heating Cost",
+    # ('Cooling Coil Total Cooling Energy', '*'): "Cooling Cost",
+    # ('Chiller Electric Energy', 'COOLSYS1 CHILLER 1'): "Chiller 1 Electricity",
+    # ('Chiller Electric Energy', 'COOLSYS1 CHILLER 2'): "Chiller 2 Electricity",
+
+    ('Facility Total HVAC Electric Demand Power', '*'): "HVAC Power",
+
+    # Mixed Air
+    # ('System Node Temperature', 'VAV_1_OA-VAV_1_CoolCNode'): "VAV1 MA Temp.",
+    # ('System Node Temperature', 'VAV_2_OA-VAV_2_CoolCNode'): "VAV2 MA Temp.",
+    # ('System Node Temperature', 'VAV_3_OA-VAV_3_CoolCNode'): "VAV3 MA Temp.",
+    # ('System Node Temperature', 'VAV_5_OA-VAV_5_CoolCNode'): "VAV5 MA Temp.",
+    ## ('Indoor Air Temperature Setpoint', '*'): "Indoor Temp. Setpoint",
+
     # Damper
     # ("Zone Air Terminal VAV Damper Position", "BASEMENT VAV BOX COMPONENT"): "Basement VAV Damper Position",
     # ("Zone Air Terminal VAV Damper Position", "CORE_BOTTOM VAV BOX COMPONENT"): "Core_bottom VAV Damper Position",
