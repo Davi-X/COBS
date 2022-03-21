@@ -731,6 +731,13 @@ class Model:
             self.add_configuration("Output:Variable", {"Key Value": '*',
                                                        "Variable Name": "Zone Air Temperature",
                                                        "Reporting Frequency": "Timestep"})
+
+        try:
+            self.get_configuration("Output:Variable", "Lights Electric Energy")
+        except KeyError:
+            self.add_configuration("Output:Variable", {"Key Value": '*',
+                                                       "Variable Name": "Lights Electric Energy",
+                                                       "Reporting Frequency": "Timestep"})
         try:
             self.get_configuration("Output:Variable", "Zone Thermal Comfort Fanger Model PPD")
         except KeyError:
