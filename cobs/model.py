@@ -514,7 +514,7 @@ class Model:
         self.state_modifier.get_update_states(current_state, self)
         # current_state.update(update_dict)
         # print(current_state)
-
+        self.save_extended_history(current_state)
         if self.use_lock:
             # print("Child: Sending current states")
             self.child_energy.send(current_state)
@@ -603,7 +603,6 @@ class Model:
                          current_state["terminate"])
         # print("Step: ", self.replay.buffer[0])
         self.save_extended_history(current_state)
-        print(self.state_history)
         self.current_state = current_state
         # self.historical_values.append(self.current_state)
         if current_state["terminate"]:
@@ -705,7 +704,6 @@ class Model:
             self.api.runtime.callback_begin_system_timestep_before_predictor(self._step_callback)
         else:
             self.api.runtime.callback_begin_new_environment(self._generate_output_files)
-        print(self.run_parameters)
         self.api.runtime.run_energyplus(self.run_parameters)
         # if self.use_lock:
         #     self.child_energy.send("Terminated")
@@ -731,7 +729,6 @@ class Model:
             self.add_configuration("Output:Variable", {"Key Value": '*',
                                                        "Variable Name": "Zone Air Temperature",
                                                        "Reporting Frequency": "Timestep"})
-
         try:
             self.get_configuration("Output:Variable", "Lights Electric Energy")
         except KeyError:
@@ -750,13 +747,14 @@ class Model:
             self.add_configuration("Output:Variable", {"Key Value": '*',
                                                        "Variable Name": "Zone Thermal Comfort Fanger Model PMV",
                                                        "Reporting Frequency": "Timestep"})
-
         try:
             self.get_configuration("Output:Variable", "Facility Total HVAC Electric Demand Power")
         except KeyError:
             self.add_configuration("Output:Variable", {"Key Value": '*',
                                                        "Variable Name": "Facility Total HVAC Electric Demand Power",
                                                        "Reporting Frequency": "Timestep"})
+
+
         self.idf.saveas(self.input_idf)
         self.use_lock = False
         self.zone_names = self.get_available_names_under_group("Zone")

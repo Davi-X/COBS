@@ -1,5 +1,8 @@
 from utils.ActionCreator import ActionCreator
 SatAction = ActionCreator("Schedule:Compact", "Schedule Value", "SEASONAL-RESET-SUPPLY-AIR-TEMP-SCH")
+SatAction1 = ActionCreator("System Node Setpoint", "Temperature Setpoint", "VAV_1_OA-VAV_1_CoolCNode")
+SatAction2 = ActionCreator("System Node Setpoint", "Temperature Setpoint", "VAV_2_OA-VAV_2_CoolCNode")
+SatAction3 = ActionCreator("System Node Setpoint", "Temperature Setpoint", "VAV_3_OA-VAV_3_CoolCNode")
 
 zones = ['Core_bottom', 'Core_mid', 'Core_top',
          'Perimeter_bot_ZN_1', 'Perimeter_bot_ZN_2', 'Perimeter_bot_ZN_3', 'Perimeter_bot_ZN_4',
@@ -11,14 +14,12 @@ zones = ['Core_bottom', 'Core_mid', 'Core_top',
 #               'Ambient Temp.']
 state_names = ['time', {'temperature': zones}]
 
-zone_vars = ["Zone Air Temperature", "Lights Electric Energy",
-             "Zone Thermal Comfort Fanger Model PPD",
-             "Zone Thermal Comfort Fanger Model PMV",
-             "Facility Total HVAC Electric Demand Power"]
-
-dist_vars = ["Site Wind Speed", "Site Wind Direction",
-             "Site Diffuse Solar Radiation Rate per Area",
-             "Site Direct Solar Radiation Rate per Area"]
+disturbances_dict = {"Site Outdoor Air Drybulb Temperature": "Ambient Temp.",
+                     "Site Outdoor Air Relative Humidity": "Outdoor RH",
+                     "Site Wind Speed": "Wind Speed",
+                     "Site Wind Direction": "Wind Direction",
+                     "Site Diffuse Solar Radiation Rate per Area": "Diffuse Solar Rad.",
+                     "Site Direct Solar Radiation Rate per Area": "Direct Solar Rad."}
 
 eplus_naming_dict = {
     # Environmental Disturbances
@@ -49,9 +50,9 @@ eplus_naming_dict = {
     ('Facility Total HVAC Electric Demand Power', '*'): "HVAC Power",
 
     # Mixed Air
-    # ('System Node Temperature', 'VAV_1_OA-VAV_1_CoolCNode'): "VAV1 MA Temp.",
-    # ('System Node Temperature', 'VAV_2_OA-VAV_2_CoolCNode'): "VAV2 MA Temp.",
-    # ('System Node Temperature', 'VAV_3_OA-VAV_3_CoolCNode'): "VAV3 MA Temp.",
+    ('System Node Temperature', 'VAV_1_OA-VAV_1_CoolCNode'): "VAV1 MA Temp.",
+    ('System Node Temperature', 'VAV_2_OA-VAV_2_CoolCNode'): "VAV2 MA Temp.",
+    ('System Node Temperature', 'VAV_3_OA-VAV_3_CoolCNode'): "VAV3 MA Temp.",
     # ('System Node Temperature', 'VAV_5_OA-VAV_5_CoolCNode'): "VAV5 MA Temp.",
     ## ('Indoor Air Temperature Setpoint', '*'): "Indoor Temp. Setpoint",
 

@@ -19,12 +19,12 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 
-from config import state_names, eplus_naming_dict, eplus_var_types, SatAction
+from config import state_names, disturbances_dict, eplus_naming_dict, eplus_var_types, SatAction1, SatAction2, SatAction3
 from agents.DQNAgent import *
 from agents.Networks.DeepQ import *
 
 
-def vectorise(curr_obs, agent_type, dist_names, last_episode_obs_history):
+def vectorise(curr_obs, dist_names, last_episode_obs_history):
     values = []
     VAV_1 = []
     VAV_2 = []
@@ -48,23 +48,30 @@ def vectorise(curr_obs, agent_type, dist_names, last_episode_obs_history):
 
             # For each zone, using history to min-max normalize and append to results
             for zone, value in curr_obs[feature].items():
-                if agent_type == 'dqn':
-                    zone_history = history_in_dict[zone]
-                    normalised_zone_data = (value - min(zone_history)) / (max(zone_history) - min(zone_history))
-                    values.append(normalised_zone_data)
-                else:
-                    if zone == 'Basement':
-                        VAV_1.append(value)
-                    elif 'bot' in zone or 'Ground' in zone:
-                        VAV_2.append(value)
-                    elif 'mid' in zone or 'Mid' in zone:
-                        VAV_3.append(value)
-                    elif 'top' in zone or 'Top' in zone:
-                        VAV_5.append(value)
-        # For time feature, to keep cyclical nature, convert to sin & cos for each time variable
+                zone_history = history_in_dict[zone]
+                normalised_zone_data = (value - min(zone_history)) / (max(zone_history) - min(zone_history))
+                # values.append(normalised_zone_data)
+
+                # This is for DOE reference building Large Office Chicago
+                # if zone == 'Basement':
+                #     VAV_1.append(value)
+                # elif 'bot' in zone or 'Ground' in zone:
+                #     VAV_2.append(value)
+                # elif 'mid' in zone or 'Mid' in zone:
+                #     VAV_3.append(value)
+                # elif 'top' in zone or 'Top' in zone:
+                #     VAV_5.append(value)
+                if 'bot' in zone or 'Ground' in zone or 'First' in zone:
+                    VAV_1.append(normalised_zone_data)
+                elif 'mid' in zone or 'Mid' in zone:
+                    VAV_2.append(normalised_zone_data)
+                elif 'top' in zone or 'Top' in zone:
+                    VAV_3.append(normalised_zone_data)
+        # For 'time' feature, to keep cyclical nature, convert to sin & cos for each time variable
         elif name == 'time':
             # curr_obs['time'] = curr_obs['time'].replace(year=1991)
             minutes_in_day = 24 * 60
+            seconds_in_day = minutes_in_day * 60
 
             day_sin = np.sin(2 * np.pi * curr_obs['time'].day / 31)
             day_cos = np.cos(2 * np.pi * curr_obs['time'].day / 31)
@@ -75,21 +82,21 @@ def vectorise(curr_obs, agent_type, dist_names, last_episode_obs_history):
             min_sin = np.sin(2 * np.pi * curr_obs['time'].minute / minutes_in_day)
             min_cos = np.cos(2 * np.pi * curr_obs['time'].minute / minutes_in_day)
 
-            values += [day_sin, day_cos, hour_sin, hour_cos, min_sin, min_cos]
+            sec_sin = np.sin(2 * np.pi * curr_obs['time'].minute / seconds_in_day)
+            sec_cos = np.cos(2 * np.pi * curr_obs['time'].minute / seconds_in_day)
+
+            values += [day_sin, day_cos, hour_sin, hour_cos, min_sin, min_cos, sec_sin, sec_cos]
         else:
             values.append(curr_obs[name])
 
-    if agent_type != 'dqn':
-        VAV = [VAV_1, VAV_2, VAV_3, VAV_5]
-        values.append(VAV)
-
+    # Add all environmental disturbances
     for i in range(len(disturbance)):
         if curr_obs['time'] == all_exp_time[i].to_pydatetime():
             values += list(disturbance.iloc[i].values)
-    return values
+    return values, [VAV_1, VAV_2, VAV_3]
 
 
-def setup_env(idf_path, epw_path, num_days=14):
+def setup_env(idf_path, epw_path, num_days=14, timestep=4):
 #     reward = ViolationPActionReward(1)
     reward = Reward()
 
@@ -101,35 +108,70 @@ def setup_env(idf_path, epw_path, num_days=14):
         reward=reward,
     )
     ep_model.set_runperiod(*(num_days, 1991, 7, 1))
+    ep_model.set_timestep(timestep)
 
+    # Run Runperiod Time not the sizing periods
+    original_run_period = {'Run_Simulation_for_Sizing_Periods': "YES",
+                           'Run_Simulation_for_Weather_File_Run_Periods': "NO"}
+    changed_run_period = {'Run_Simulation_for_Sizing_Periods': "NO",
+                          'Run_Simulation_for_Weather_File_Run_Periods': "YES"}
+    ep_model.edit_configuration("SimulationControl", original_run_period, changed_run_period)
+
+    # Add Mixed Air Temp for each AHU to Output Variables
+    ep_model.add_configuration("Output:Variable", {"Key Value": 'VAV_1_OA-VAV_1_CoolCNode',
+                                                   "Variable Name": "System Node Temperature",
+                                                   "Reporting Frequency": "Timestep"})
+
+    ep_model.add_configuration("Output:Variable", {"Key Value": 'VAV_2_OA-VAV_2_CoolCNode',
+                                                   "Variable Name": "System Node Temperature",
+                                                   "Reporting Frequency": "Timestep"})
+
+    ep_model.add_configuration("Output:Variable", {"Key Value": 'VAV_3_OA-VAV_3_CoolCNode',
+                                                   "Variable Name": "System Node Temperature",
+                                                   "Reporting Frequency": "Timestep"})
+    # Add environmental disturbances variables
+    existed_vars = [ep_model.idf.idfobjects["Output:Variable"][i].Variable_Name
+                    for i in range(len(ep_model.idf.idfobjects["Output:Variable"]))]
+
+    for dist_var in disturbances_dict.keys():
+        if dist_var not in existed_vars:
+            ep_model.add_configuration("Output:Variable", {"Variable Name": dist_var,
+                                                           "Reporting Frequency": "Timestep"})
     return ep_model
 
 
-def run_episode(model, agent, dist_names, last_episode_obs_history):
+def run_episode(model, agent_list, dist_names, last_episode_obs_history):
     observations = []
     sat_actions_list = []
 
     curr_obs = model.reset()
     observations.append(curr_obs)
-    state = vectorise(curr_obs, 'dqn', dist_names, last_episode_obs_history)
-    action = agent.agent_start((state, curr_obs, 0))
+    state, AHUs = vectorise(curr_obs, dist_names, last_episode_obs_history)
+    actions = []
+    for i in range(len(agent_list)):
+        actions.append(agent_list[i].agent_start((state + AHUs[i], curr_obs, 0)))
 
     while not model.is_terminate():
         env_actions = []
-        stpt_actions = SatAction([action[0]], curr_obs)
-
-        env_actions += stpt_actions
+        stpt_actions1 = SatAction1([actions[0][0]], curr_obs)
+        stpt_actions2 = SatAction2([actions[1][0]], curr_obs)
+        stpt_actions3 = SatAction3([actions[2][0]], curr_obs)
+        print([stpt_actions1, stpt_actions2, stpt_actions3])
+        env_actions.extend([stpt_actions1, stpt_actions2, stpt_actions3])
 
         curr_obs = model.step(env_actions)
         observations.append(curr_obs)
-        state = vectorise(curr_obs, 'dqn', dist_names, last_episode_obs_history)
+        state, AHUs = vectorise(curr_obs, dist_names, last_episode_obs_history)
 
-        feeding_state = (state, curr_obs, curr_obs["timestep"])
-        action = agent.agent_step(curr_obs["reward"], feeding_state)
-        sat_actions = action
-        sat_actions_list.append(sat_actions[0])
+        actions = []
+        for i in range(len(agent_list)):
+            feeding_state = (state + AHUs[i], curr_obs, curr_obs["timestep"])
+            actions.append(agent_list[i].agent_step(curr_obs["reward"], feeding_state))
+            sat_actions_list.append(actions[i][0])
+        # sat_actions = actions
+        # sat_actions_list.append(sat_actions[0])
 
-    return observations, sat_actions_list, agent
+    return observations, sat_actions_list, agent_list
 
 
 def main():
