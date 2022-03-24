@@ -24,7 +24,8 @@ class DQN_Network(nn.Module):
         self.fc1 = nn.Linear(num_features, 50)
         self.fc2 = nn.Linear(50, 100)
         self.fc3 = nn.Linear(100, 200)
-        self.out = nn.Linear(200, num_actions)
+        self.fc4 = nn.Linear(200, 400)
+        self.out = nn.Linear(400, num_actions)
 
         self.apply(weights_init_)
         self.optimizer = optim.RMSprop(self.parameters(), lr)
@@ -36,6 +37,7 @@ class DQN_Network(nn.Module):
         t = F.relu(self.fc1(t))
         t = F.relu(self.fc2(t))
         t = F.relu(self.fc3(t))
+        t = F.relu(self.fc4(t))
         return self.out(t)
 
     def save_checkpoint(self, num):

@@ -74,7 +74,8 @@ class DQNAgent:
         states = T.tensor(state_batch).to(self.q_eval.device)
         actions = T.tensor(action_batch).to(self.q_eval.device)
         rewards = T.tensor(reward_batch).to(self.q_eval.device)
-        dones = T.ByteTensor(mask_batch.astype(int)).to(self.q_eval.device)
+        # dones = T.ByteTensor(mask_batch.astype(int)).to(self.q_eval.device)
+        dones = T.BoolTensor(mask_batch.astype(int)).to(self.q_eval.device)
         states_ = T.tensor(next_state_batch).to(self.q_eval.device)
 
         return states, actions, rewards, states_, dones
@@ -102,7 +103,7 @@ class DQNAgent:
         q_pred = self.q_eval.forward(states)[indices, actions].double()
         q_next = self.q_next.forward(states_).max(dim=1)[0]
 
-        dones = T.ByteTensor(dones)
+        dones = T.BoolTensor(dones)
         q_next[dones] = 0.0
 
         q_target = rewards + self.gamma * q_next.double()

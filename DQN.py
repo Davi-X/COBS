@@ -19,7 +19,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 
-from config import state_names, disturbances_dict, eplus_naming_dict, eplus_var_types, SatAction1, SatAction2, SatAction3
+from config import state_names, disturbances_dict, eplus_naming_dict, eplus_var_types, SatAction
 from agents.DQNAgent import *
 from agents.Networks.DeepQ import *
 
@@ -150,15 +150,14 @@ def run_episode(model, agent_list, dist_names, last_episode_obs_history):
     actions = []
     for i in range(len(agent_list)):
         actions.append(agent_list[i].agent_start((state + AHUs[i], curr_obs, 0)))
-
+        sat_actions_list.append(actions[i][0])
+    sat_actions_list.append('|*|')
     while not model.is_terminate():
         env_actions = []
-        stpt_actions1 = SatAction1([actions[0][0]], curr_obs)
-        stpt_actions2 = SatAction2([actions[1][0]], curr_obs)
-        stpt_actions3 = SatAction3([actions[2][0]], curr_obs)
-        print([stpt_actions1, stpt_actions2, stpt_actions3])
-        env_actions.extend([stpt_actions1, stpt_actions2, stpt_actions3])
-
+        stpt_actions = SatAction([actions[0][0] + curr_obs['AHU1 MA Temp.'],
+                                  actions[1][0] + curr_obs['AHU2 MA Temp.'],
+                                  actions[2][0] + curr_obs['AHU3 MA Temp.']], curr_obs)
+        env_actions.extend(stpt_actions)
         curr_obs = model.step(env_actions)
         observations.append(curr_obs)
         state, AHUs = vectorise(curr_obs, dist_names, last_episode_obs_history)
@@ -166,8 +165,13 @@ def run_episode(model, agent_list, dist_names, last_episode_obs_history):
         actions = []
         for i in range(len(agent_list)):
             feeding_state = (state + AHUs[i], curr_obs, curr_obs["timestep"])
+            # print(curr_obs['timestep'])
+            # print('--------------------------------------------------------------------------------------')
+            # print(i, feeding_state)
+            # print('--------------------------------------------------------------------------------------')
             actions.append(agent_list[i].agent_step(curr_obs["reward"], feeding_state))
             sat_actions_list.append(actions[i][0])
+        sat_actions_list.append('|*|')
         # sat_actions = actions
         # sat_actions_list.append(sat_actions[0])
 

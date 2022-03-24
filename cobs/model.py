@@ -59,7 +59,7 @@ class Reward:
         #         state["Water Heating Pump Electricity"] + state["Water Tower Pump Electricity"]
         #
         # self.electricity = state["All AHUs'Fan Power"] + chillers + pumps + state['Cool Tower Fan Electricity'] + lights
-        self.electricity = state['HVAC Power'] + lights
+        self.electricity = state['HVAC Cost'] + lights
         if den != 0:
             self.thermal_comfort = thermal_num / den
         self.value = -self.electricity - self.thermal_comfort
@@ -473,17 +473,25 @@ class Model:
                     continue
                 current_state["Lights"][self.thermal_names[zone]] = self.api.exchange.get_variable_value(handle)
 
-        # if "Site Diffuse Solar Radiation Rate per Area" in self.get_available_names_under_group("Output:Variable") and \
-        #         "Site Direct Solar Radiation Rate per Area" in self.get_available_names_under_group("Output:Variable"):
-        #     handle1 = self.api.exchange.get_variable_handle("Site Diffuse Solar Radiation Rate per Area", "Environment")
-        #     handle2 = self.api.exchange.get_variable_handle("Site Direct Solar Radiation Rate per Area", "Environment")
-        #     diffuse = direct = 0
-        #     if handle1 != -1:
-        #         diffuse = self.api.exchange.get_variable_value(handle1)
-        #     if handle2 != -1:
-        #         direct = self.api.exchange.get_variable_value(handle2)
-        #     current_state['Diff. solar'] = diffuse
-        #     current_state['Direct solar'] = direct
+        if "Fans:Electricity" in self.get_available_names_under_group("Output:Meter"):
+            handle = self.api.exchange.get_meter_handle("Fans:Electricity")
+            if handle != -1:
+                current_state["Fans Cost"] = self.api.exchange.get_meter_value(handle)
+
+        if "Cooling:Electricity" in self.get_available_names_under_group("Output:Meter"):
+            handle = self.api.exchange.get_meter_handle("Cooling:Electricity")
+            if handle != -1:
+                current_state["Cooling Cost"] = self.api.exchange.get_meter_value(handle)
+
+        if "Heating:Electricity" in self.get_available_names_under_group("Output:Meter"):
+            handle = self.api.exchange.get_meter_handle("Heating:Electricity")
+            if handle != -1:
+                current_state["Heating Cost"] = self.api.exchange.get_meter_value(handle)
+
+        if "Electricity:HVAC" in self.get_available_names_under_group("Output:Meter"):
+            handle = self.api.exchange.get_meter_handle("Electricity:HVAC")
+            if handle != -1:
+                current_state["HVAC Cost"] = self.api.exchange.get_meter_value(handle)
 
         # Add state values
         state_vars = self.get_current_state_variables()
@@ -753,7 +761,6 @@ class Model:
             self.add_configuration("Output:Variable", {"Key Value": '*',
                                                        "Variable Name": "Facility Total HVAC Electric Demand Power",
                                                        "Reporting Frequency": "Timestep"})
-
 
         self.idf.saveas(self.input_idf)
         self.use_lock = False

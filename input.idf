@@ -621,7 +621,23 @@ Schedule:Compact,
     0.0;                      !- Field 18
 
 Schedule:Compact,
-    Seasonal-Reset-Supply-Air-Temp-Sch,    !- Name
+    Seasonal-Reset-Supply-Air-Temp-Sch1,    !- Name
+    Temperature,              !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    12.8;                     !- Field 4
+
+Schedule:Compact,
+    Seasonal-Reset-Supply-Air-Temp-Sch2,    !- Name
+    Temperature,              !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    12.8;                     !- Field 4
+
+Schedule:Compact,
+    Seasonal-Reset-Supply-Air-Temp-Sch3,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
@@ -8227,19 +8243,19 @@ AvailabilityManagerAssignmentList,
 SetpointManager:Scheduled,
     VAV_1 SAT setpoint,       !- Name
     Temperature,              !- Control Variable
-    Seasonal-Reset-Supply-Air-Temp-Sch,    !- Schedule Name
+    Seasonal-Reset-Supply-Air-Temp-Sch1,    !- Schedule Name
     VAV_1 Supply Equipment Outlet Node;    !- Setpoint Node or NodeList Name
 
 SetpointManager:Scheduled,
     VAV_2 SAT setpoint,       !- Name
     Temperature,              !- Control Variable
-    Seasonal-Reset-Supply-Air-Temp-Sch,    !- Schedule Name
+    Seasonal-Reset-Supply-Air-Temp-Sch2,    !- Schedule Name
     VAV_2 Supply Equipment Outlet Node;    !- Setpoint Node or NodeList Name
 
 SetpointManager:Scheduled,
     VAV_3 SAT setpoint,       !- Name
     Temperature,              !- Control Variable
-    Seasonal-Reset-Supply-Air-Temp-Sch,    !- Schedule Name
+    Seasonal-Reset-Supply-Air-Temp-Sch3,    !- Schedule Name
     VAV_3 Supply Equipment Outlet Node;    !- Setpoint Node or NodeList Name
 
 SetpointManager:Scheduled,
@@ -9022,6 +9038,41 @@ Output:Variable,
     Zone Mean Air Temperature,    !- Variable Name
     HOURLY;                   !- Reporting Frequency
 
+Output:Variable,
+    VAV_1 SUPPLY EQUIPMENT OUTLET NODE,    !- Key Value
+    System Node Setpoint Temperature,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    VAV_1 SUPPLY EQUIPMENT OUTLET NODE,    !- Key Value
+    System Node Temperature,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    VAV_2 SUPPLY EQUIPMENT OUTLET NODE,    !- Key Value
+    System Node Temperature,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    VAV_3 SUPPLY EQUIPMENT OUTLET NODE,    !- Key Value
+    System Node Temperature,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    VAV_2 SUPPLY EQUIPMENT OUTLET NODE,    !- Key Value
+    System Node Setpoint Temperature,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    VAV_3 SUPPLY EQUIPMENT OUTLET NODE,    !- Key Value
+    System Node Setpoint Temperature,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Heating Coil Heating Energy,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
 OUTPUT:VARIABLE,
     VAV_1_OA-VAV_1_CoolCNode,    !- Key Value
     System Node Temperature,    !- Variable Name
@@ -9089,6 +9140,10 @@ OUTPUT:VARIABLE,
 
 Output:Meter,
     Electricity:Facility,     !- Key Name
+    HOURLY;                   !- Reporting Frequency
+
+Output:Meter,
+    Electricity:HVAC,         !- Key Name
     HOURLY;                   !- Reporting Frequency
 
 Output:Meter,

@@ -10,7 +10,7 @@ def augment_ma(observation, action):
     (last_state, obs_dict, cur_time) = observation
     # if action < 0:
     #     action = torch.zeros_like(action)
-    SAT_zones = ["VAV1 MA Temp.", "VAV2 MA Temp.", "VAV3 MA Temp."]
+    SAT_zones = ["AHU1 MA Temp.", "AHU2 MA Temp.", "AHU3 MA Temp."]
     SAT_stpt = [obs_dict[SAT_zone] + action for SAT_zone in SAT_zones]  # max(0, action)
 
     # If the room gets too warm during occupied period, uses outdoor air for free cooling.
