@@ -14,19 +14,6 @@ class BDDQNAgent():
         super(BDDQNAgent, self).__init__(agent_info, Network, chkpt_dir=chkpt_dir)
 
         self.type = 'DDQNAgent'
-
-        # Create action space
-        self.num_sat_actions = agent_info.get('num_sat_actions', 0)
-        # self.num_therm_actions = agent_info.get('num_therm_actions', 0)
-
-        self.discrete_sat_actions = agent_info.get('discrete_sat_actions', 0)
-        # self.discrete_therm_actions = agent_info.get('discrete_therm_actions', 0)
-
-        self.stpt_action_space = np.linspace(
-                agent_info.get('min_sat_action'), agent_info.get('max_sat_action'), self.discrete_sat_actions).round()
-        # self.therm_action_space = np.linspace(
-        #     agent_info.get('min_therm_action', 0), agent_info.get('max_therm_action', 40), self.discrete_therm_actions).round()
-
         # Set Hyperparameters
         self.gamma = agent_info.get('gamma')
         self.epsilon = agent_info.get('epsilon')
@@ -36,7 +23,18 @@ class BDDQNAgent():
         self.eps_min = agent_info.get('eps_min')
         self.eps_dec = agent_info.get('eps_dec')
         self.replace_target_cnt = agent_info.get('replace')
-        self.device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
+
+        # Create action space
+        self.num_sat_actions = agent_info.get('num_sat_actions', 0)
+        # self.num_therm_actions = agent_info.get('num_therm_actions', 0)
+
+        self.discrete_sat_actions = agent_info.get('discrete_sat_actions', 0)
+        # self.discrete_therm_actions = agent_info.get('discrete_therm_actions', 0)
+
+        self.stpt_action_space = np.linspace(
+                agent_info.get('min_sat_action'), agent_info.get('max_sat_action'), self.discrete_sat_actions).round(1)
+        # self.therm_action_space = np.linspace( agent_info.get('min_therm_action', 0), agent_info.get(
+        # 'max_therm_action', 40), self.discrete_therm_actions).round()
 
         self.chkpt_dir = chkpt_dir
         self.learn_step_counter = 0
@@ -77,10 +75,10 @@ class BDDQNAgent():
                 actions_stpt_idx = T.argmax(a).item()
                 stpt_actions.append(self.stpt_action_space[actions_stpt_idx])
                 idxs.append(actions_stpt_idx)
-            for a in a_therms:
-                actions_stpt_idx = T.argmax(a).item()
-                therm_actions.append(self.therm_action_space[actions_stpt_idx])
-                idxs.append(actions_stpt_idx)
+            # for a in a_therms:
+            #     actions_stpt_idx = T.argmax(a).item()
+            #     therm_actions.append(self.therm_action_space[actions_stpt_idx])
+            #     idxs.append(actions_stpt_idx)
 
         else:
             stpt_actions = []
@@ -92,10 +90,10 @@ class BDDQNAgent():
                 rand = np.random.choice(self.stpt_action_space)
                 stpt_actions.append(rand)
                 idxs.append(np.where(self.stpt_action_space == rand)[0].item())
-            for i in range(0, self.num_therm_actions):
-                rand = np.random.choice(self.therm_action_space)
-                therm_actions.append(rand)
-                idxs.append(np.where(self.therm_action_space == rand)[0].item())
+            # for i in range(0, self.num_therm_actions):
+            #     rand = np.random.choice(self.therm_action_space)
+            #     therm_actions.append(rand)
+            #     idxs.append(np.where(self.therm_action_space == rand)[0].item())
 
         sat_actions_tups = []
         for a in stpt_actions:
@@ -130,8 +128,8 @@ class BDDQNAgent():
         self.q_eval.optimizer.zero_grad()
         self.replace_target_network()
         states, actions, rewards, states_, dones = self.sample_memory()
-        V_s, A_stpts, A_therms, A_blinds = self.q_eval.forward(states)
-        V_s_, A_stpts_, A_therms_, A_blinds_ = self.q_next.forward(states_)
+        V_s, A_stpts = self.q_eval.forward(states)
+        V_s_, A_stpts_ = self.q_next.forward(states_)
         indices = np.arange(self.batch_size)
 
         actions = actions.type(T.long)
@@ -139,14 +137,6 @@ class BDDQNAgent():
         losses = []
         act_idx = 0
         for A_s, A_s_ in zip(A_stpts, A_stpts_):
-            q_pred = T.add(V_s, (A_s - A_s.mean(dim=1, keepdim=True)))[indices, actions[:, act_idx]].double()
-            q_next = T.add(V_s_, (A_s_ - A_s_.mean(dim=1, keepdim=True))).max(dim=1)[0]
-            q_target = rewards + self.gamma*q_next.double()
-            loss = self.q_eval.loss(q_target, q_pred).to(self.q_eval.device)
-            losses.append(loss)
-            act_idx += 1
-
-        for A_s, A_s_ in zip(A_therms, A_therms_):
             q_pred = T.add(V_s, (A_s - A_s.mean(dim=1, keepdim=True)))[indices, actions[:, act_idx]].double()
             q_next = T.add(V_s_, (A_s_ - A_s_.mean(dim=1, keepdim=True))).max(dim=1)[0]
             q_target = rewards + self.gamma*q_next.double()

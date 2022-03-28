@@ -2,17 +2,16 @@ import pandas as pd
 from datetime import timedelta
 
 
-class CsvImporter:
+class pklImporter:
     def __init__(self, file_name, planstep=12):
-        data_frame = pd.read_csv(file_name, index_col=0)
+        data_frame = pd.read_pickle(file_name)
         # Read forecasted variables
         forecast_vars = [
-            "Outdoor Temp.",
+            "Ambient Temp.",
             "Total Rad.",
-            "Occupancy Flag"
         ]
 
-        data_frame['Total Rad.'] = data_frame['Diff. Solar Rad.'] + data_frame['Direct Solar Rad.']
+        data_frame['Total Rad.'] = data_frame['Diffuse Solar Rad.'] + data_frame['Direct Solar Rad.']
         data_frame.index = pd.to_datetime(data_frame.index)
         self.forecasted = data_frame[forecast_vars]
         self.forecasted = (self.forecasted - self.forecasted.min()) / (self.forecasted.max() - self.forecasted.min())

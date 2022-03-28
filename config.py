@@ -9,15 +9,16 @@ SatAction = ActionCreator("Schedule:Compact", "Schedule Value",
 #                             "VAV_2 SUPPLY EQUIPMENT OUTLET NODE",
 #                             "VAV_3 SUPPLY EQUIPMENT OUTLET NODE"])
 
-zones = ['Core_bottom', 'Core_mid', 'Core_top',
+zones_without_plenums = ['Core_bottom', 'Core_mid', 'Core_top',
          'Perimeter_bot_ZN_1', 'Perimeter_bot_ZN_2', 'Perimeter_bot_ZN_3', 'Perimeter_bot_ZN_4',
          'Perimeter_mid_ZN_1', 'Perimeter_mid_ZN_2', 'Perimeter_mid_ZN_3', 'Perimeter_mid_ZN_4',
          'Perimeter_top_ZN_1', 'Perimeter_top_ZN_2', 'Perimeter_top_ZN_3', 'Perimeter_top_ZN_4']
+zones_with_plenums = zones_without_plenums + ['FirstFloor_Plenum', 'MidFloor_Plenum', 'TopFloor_Plenum']
 
 # No disturbances as they are normalized by the previous epoch data and pass to 'vectorise()' method as a parameter
 # dist_names = [ 'Outdoor RH', 'Wind Speed', 'Wind Direction', 'Direct Solar Rad.', 'Diffuse Solar Rad.',
 #               'Ambient Temp.']
-state_names = ['time', {'temperature': zones}]
+state_names = ['time', {'temperature': zones_with_plenums}]
 
 disturbances_dict = {"Site Outdoor Air Drybulb Temperature": "Ambient Temp.",
                      "Site Outdoor Air Relative Humidity": "Outdoor RH",

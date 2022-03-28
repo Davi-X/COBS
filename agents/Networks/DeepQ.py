@@ -9,8 +9,6 @@ def weights_init_(m):
     if isinstance(m, nn.Linear):
         T.nn.init.xavier_uniform_(m.weight, 1)
         T.nn.init.constant_(m.bias, 0)
-        for m in m.modules():
-            print(m)
 
 
 class DQN_Network(nn.Module):

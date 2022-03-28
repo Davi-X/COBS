@@ -21,8 +21,6 @@ class BDDQN_Network(nn.Module):
         self.chkpt_dir = chkpt_dir
 
         super(BDDQN_Network, self).__init__()
-
-        self.device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
         # self.to(self.device)
 
         self.num_actions_zones = num_actions_zones
@@ -37,14 +35,16 @@ class BDDQN_Network(nn.Module):
 
         # Action estimates
         for i in range(num_actions_zones):
-            setattr(self, f"A_stpt_{i}", nn.Linear(128, num_actions).to(self.device))
-        self.apply(weights_init_)
+            setattr(self, f"A_stpt_{i}", nn.Linear(128, num_actions))
 
+        self.apply(weights_init_)
         self.optimizer = optim.Adam(self.parameters(), lr=lr)
         self.loss = nn.MSELoss()
+        self.device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
+        self.to(self.device)
 
     def forward(self, x):
-        x1 = F.relu(self.linear1(x.float()))
+        x1 = F.relu(self.linear1(x))
         x1 = F.relu(self.linear2(x1))
         x1 = F.relu(self.linear3(x1))
 

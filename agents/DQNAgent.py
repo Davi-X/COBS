@@ -10,6 +10,7 @@ class DQNAgent:
 
     def __init__(self, agent_info, Network, chkpt_dir='.'):
         self.type = 'DQNAgent'
+        # Hyperparameters
         self.gamma = agent_info.get('gamma')
         self.epsilon = agent_info.get('epsilon')
         self.lr = agent_info.get('lr')

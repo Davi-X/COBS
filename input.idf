@@ -516,6 +516,30 @@ Schedule:Compact,
     0.0;                      !- Field 4
 
 Schedule:Compact,
+    ReheatCoilAvailSched,     !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    0;                        !- Field 4
+
+Schedule:Compact,
+    HeatingCoilAvailSched,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    0;                        !- Field 4
+
+Schedule:Compact,
+    CoolingCoilAvailSched,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    1;                        !- Field 4
+
+Schedule:Compact,
     Dual Zone Control Type Sched,    !- Name
     Control Type,             !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
@@ -7251,7 +7275,7 @@ Fan:VariableVolume,
 
 Coil:Cooling:DX:TwoSpeed,
     VAV_1_CoolC DXCoil,       !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    CoolingCoilAvailSched,    !- Availability Schedule Name
     AUTOSIZE,                 !- High Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- High Speed Rated Sensible Heat Ratio
     3.23372055845678,         !- High Speed Gross Rated Cooling COP
@@ -7273,7 +7297,7 @@ Coil:Cooling:DX:TwoSpeed,
 
 Coil:Cooling:DX:TwoSpeed,
     VAV_2_CoolC DXCoil,       !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    CoolingCoilAvailSched,    !- Availability Schedule Name
     AUTOSIZE,                 !- High Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- High Speed Rated Sensible Heat Ratio
     3.23372055845678,         !- High Speed Gross Rated Cooling COP
@@ -7295,7 +7319,7 @@ Coil:Cooling:DX:TwoSpeed,
 
 Coil:Cooling:DX:TwoSpeed,
     VAV_3_CoolC DXCoil,       !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    CoolingCoilAvailSched,    !- Availability Schedule Name
     AUTOSIZE,                 !- High Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- High Speed Rated Sensible Heat Ratio
     3.23372055845678,         !- High Speed Gross Rated Cooling COP
@@ -7317,7 +7341,7 @@ Coil:Cooling:DX:TwoSpeed,
 
 Coil:Heating:Electric,
     Core_bottom VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Core_bottom VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7325,7 +7349,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Core_mid VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Core_mid VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7333,7 +7357,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Core_top VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Core_top VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7341,7 +7365,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Perimeter_bot_ZN_1 VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Perimeter_bot_ZN_1 VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7349,7 +7373,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Perimeter_bot_ZN_2 VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Perimeter_bot_ZN_2 VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7357,7 +7381,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Perimeter_bot_ZN_3 VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Perimeter_bot_ZN_3 VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7365,7 +7389,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Perimeter_bot_ZN_4 VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Perimeter_bot_ZN_4 VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7373,7 +7397,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Perimeter_mid_ZN_1 VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Perimeter_mid_ZN_1 VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7381,7 +7405,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Perimeter_mid_ZN_2 VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Perimeter_mid_ZN_2 VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7389,7 +7413,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Perimeter_mid_ZN_3 VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Perimeter_mid_ZN_3 VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7397,7 +7421,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Perimeter_mid_ZN_4 VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Perimeter_mid_ZN_4 VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7405,7 +7429,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Perimeter_top_ZN_1 VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Perimeter_top_ZN_1 VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7413,7 +7437,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Perimeter_top_ZN_2 VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Perimeter_top_ZN_2 VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7421,7 +7445,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Perimeter_top_ZN_3 VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Perimeter_top_ZN_3 VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7429,7 +7453,7 @@ Coil:Heating:Electric,
 
 Coil:Heating:Electric,
     Perimeter_top_ZN_4 VAV Box Reheat Coil,    !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    ReheatCoilAvailSched,     !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
     Perimeter_top_ZN_4 VAV Box Damper Node,    !- Air Inlet Node Name
@@ -7467,7 +7491,7 @@ Coil:Heating:Fuel,
 
 CoilSystem:Cooling:DX,
     VAV_1_CoolC,              !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    CoolingCoilAvailSched,    !- Availability Schedule Name
     VAV_1_OA-VAV_1_CoolCNode,    !- DX Cooling Coil System Inlet Node Name
     VAV_1_CoolC-VAV_1_HeatCNode,    !- DX Cooling Coil System Outlet Node Name
     VAV_1_CoolC-VAV_1_HeatCNode,    !- DX Cooling Coil System Sensor Node Name
@@ -7476,7 +7500,7 @@ CoilSystem:Cooling:DX,
 
 CoilSystem:Cooling:DX,
     VAV_2_CoolC,              !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    CoolingCoilAvailSched,    !- Availability Schedule Name
     VAV_2_OA-VAV_2_CoolCNode,    !- DX Cooling Coil System Inlet Node Name
     VAV_2_CoolC-VAV_2_HeatCNode,    !- DX Cooling Coil System Outlet Node Name
     VAV_2_CoolC-VAV_2_HeatCNode,    !- DX Cooling Coil System Sensor Node Name
@@ -7485,7 +7509,7 @@ CoilSystem:Cooling:DX,
 
 CoilSystem:Cooling:DX,
     VAV_3_CoolC,              !- Name
-    ALWAYS_ON,                !- Availability Schedule Name
+    CoolingCoilAvailSched,    !- Availability Schedule Name
     VAV_3_OA-VAV_3_CoolCNode,    !- DX Cooling Coil System Inlet Node Name
     VAV_3_CoolC-VAV_3_HeatCNode,    !- DX Cooling Coil System Outlet Node Name
     VAV_3_CoolC-VAV_3_HeatCNode,    !- DX Cooling Coil System Sensor Node Name
