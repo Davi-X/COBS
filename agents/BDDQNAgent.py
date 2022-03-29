@@ -11,7 +11,7 @@ class BDDQNAgent():
 
     def __init__(self, agent_info, Network, chkpt_dir='.'):
 
-        super(BDDQNAgent, self).__init__(agent_info, Network, chkpt_dir=chkpt_dir)
+        # super(BDDQNAgent, self).__init__(agent_info, Network, chkpt_dir=chkpt_dir)
 
         self.type = 'DDQNAgent'
         # Set Hyperparameters
@@ -24,15 +24,14 @@ class BDDQNAgent():
         self.eps_dec = agent_info.get('eps_dec')
         self.replace_target_cnt = agent_info.get('replace')
 
-        # Create action space
-        self.num_sat_actions = agent_info.get('num_sat_actions', 0)
-        # self.num_therm_actions = agent_info.get('num_therm_actions', 0)
+        # Discrete num actions
+        self.num_sat_actions = agent_info.get('num_actions', 0)
 
-        self.discrete_sat_actions = agent_info.get('discrete_sat_actions', 0)
-        # self.discrete_therm_actions = agent_info.get('discrete_therm_actions', 0)
+        # Num AHUs
+        self.num_sat_action_zones = agent_info.get('num_action_zones', 0)
 
         self.stpt_action_space = np.linspace(
-                agent_info.get('min_sat_action'), agent_info.get('max_sat_action'), self.discrete_sat_actions).round(1)
+                agent_info.get('min_sat_action'), agent_info.get('max_sat_action'), self.num_sat_actions).round(1)
         # self.therm_action_space = np.linspace( agent_info.get('min_therm_action', 0), agent_info.get(
         # 'max_therm_action', 40), self.discrete_therm_actions).round()
 
@@ -45,27 +44,14 @@ class BDDQNAgent():
             chkpt_dir
         )
 
-        self.q_eval = Network(
-            self.lr,
-            self.num_sat_actions, self.num_therm_actions, self.num_blind_actions,
-            self.discrete_sat_actions, self.discrete_therm_actions, self.discrete_blind_actions,
-            input_dims=self.input_dims,
-            name='q_eval',
-            chkpt_dir=self.chkpt_dir)
+        self.q_eval = Network(self.lr, self.input_dims[0], self.num_sat_action_zones, self.num_sat_actions, self.chkpt_dir).double()
 
-        self.q_next = Network(
-            self.lr,
-            self.num_sat_actions, self.num_therm_actions,
-            self.discrete_sat_actions, self.discrete_therm_actions,
-            input_dims=self.input_dims,
-            name='q_next',
-            chkpt_dir=self.chkpt_dir)
+        self.q_next = Network(self.lr, self.input_dims[0], self.num_sat_action_zones, self.num_sat_actions, self.chkpt_dir).double()
 
-    def select_action(self, observation):
+    def choose_action(self, observation):
         if np.random.random() > self.epsilon:
             state, _, _ = observation
-
-            _, a_stpts, a_therms, a_blinds = self.q_eval.forward(state.to(self.device))
+            _, a_stpts = self.q_eval.forward(T.tensor(state).double())
             stpt_actions = []
             therm_actions = []
             blind_actions = []
@@ -86,7 +72,7 @@ class BDDQNAgent():
             blind_actions = []
             idxs = []
 
-            for i in range(0, self.num_sat_actions):
+            for i in range(0, self.num_sat_action_zones):
                 rand = np.random.choice(self.stpt_action_space)
                 stpt_actions.append(rand)
                 idxs.append(np.where(self.stpt_action_space == rand)[0].item())
@@ -96,19 +82,25 @@ class BDDQNAgent():
             #     idxs.append(np.where(self.therm_action_space == rand)[0].item())
 
         sat_actions_tups = []
-        for a in stpt_actions:
-            action_stpt, sat_sp = augment_ma(observation, a)
-            sat_actions_tups.append((action_stpt, sat_sp))
-        return sat_actions_tups, therm_actions, blind_actions, idxs
+        for i in range(len(stpt_actions)):
+            action_stpt, sat_sp = augment_ma(observation, stpt_actions[i])
+            sat_actions_tups.append((action_stpt, sat_sp[i]))
+        return sat_actions_tups, idxs
+
+    def store_transition(self, observation, action, reward, observation_, done):
+        # TODO - need to test that the action index is working properly
+        _, action_idxs = action
+        state, _, _ = observation
+        state_, _, _ = observation_
+        self.memory.push(state, action_idxs, reward, state_, done)
 
     def sample_memory(self):
-        state, action, reward, new_state, done = \
-            self.memory.sample(batch_size=self.batch_size)
+        state, action, reward, new_state, done = self.memory.sample(batch_size=self.batch_size)
 
         states = T.tensor(state).to(self.q_eval.device)
         rewards = T.tensor(reward).to(self.q_eval.device)
         actions = T.tensor(action).to(self.q_eval.device)
-        dones = T.ByteTensor(done.astype(int)).to(self.q_eval.device)
+        dones = T.BoolTensor(done.astype(int)).to(self.q_eval.device)
         states_ = T.tensor(new_state).to(self.q_eval.device)
 
         return states, actions, rewards, states_, dones
@@ -125,12 +117,16 @@ class BDDQNAgent():
     def learn(self):
         if len(self.memory) < self.batch_size:
             return
+
         self.q_eval.optimizer.zero_grad()
+
         self.replace_target_network()
+
         states, actions, rewards, states_, dones = self.sample_memory()
+        indices = np.arange(self.batch_size)
+
         V_s, A_stpts = self.q_eval.forward(states)
         V_s_, A_stpts_ = self.q_next.forward(states_)
-        indices = np.arange(self.batch_size)
 
         actions = actions.type(T.long)
 
@@ -139,7 +135,7 @@ class BDDQNAgent():
         for A_s, A_s_ in zip(A_stpts, A_stpts_):
             q_pred = T.add(V_s, (A_s - A_s.mean(dim=1, keepdim=True)))[indices, actions[:, act_idx]].double()
             q_next = T.add(V_s_, (A_s_ - A_s_.mean(dim=1, keepdim=True))).max(dim=1)[0]
-            q_target = rewards + self.gamma*q_next.double()
+            q_target = rewards + self.gamma * q_next.double()
             loss = self.q_eval.loss(q_target, q_pred).to(self.q_eval.device)
             losses.append(loss)
             act_idx += 1
@@ -148,6 +144,22 @@ class BDDQNAgent():
         self.q_eval.optimizer.step()
         self.learn_step_counter += 1
         self.decrement_epsilon()
+
+    def agent_start(self, state):
+        # action = [(sat_action1, sat_AHU1), (sat_action2, sat_AHU2), (sat_action3, sat_AHU3)], idxs
+        action = self.choose_action(state)
+        self.last_action = action
+        self.last_state = state
+        return self.last_action
+
+    def agent_step(self, reward, state):
+        # last_action = [(sat_action1, sat_AHU1), (sat_action2, sat_AHU2), (sat_action3, sat_AHU3)], idxs
+        self.store_transition(self.last_state, self.last_action, reward, state, False)
+        self.learn()
+        action = self.choose_action(state)
+        self.last_action = action
+        self.last_state = state
+        return self.last_action
 
     def save(self, num):
         self.q_eval.save_checkpoint(num)

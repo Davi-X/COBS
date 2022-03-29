@@ -79,17 +79,17 @@ def vectorise(curr_obs, dist_names, last_episode_obs_history, target_names=state
                     zone_history = history_in_dict[zone]
                     normalised_zone_data = (value - min(zone_history)) / (max(zone_history) - min(zone_history))
 
-                # values.append(normalised_zone_data)
+                    # values.append(normalised_zone_data)
 
-                # This is for DOE reference building Large Office Chicago
-                # if zone == 'Basement':
-                #     VAV_1.append(value)
-                # elif 'bot' in zone or 'Ground' in zone:
-                #     VAV_2.append(value)
-                # elif 'mid' in zone or 'Mid' in zone:
-                #     VAV_3.append(value)
-                # elif 'top' in zone or 'Top' in zone:
-                #     VAV_5.append(value)
+                    # This is for DOE reference building Large Office Chicago
+                    # if zone == 'Basement':
+                    #     VAV_1.append(value)
+                    # elif 'bot' in zone or 'Ground' in zone:
+                    #     VAV_2.append(value)
+                    # elif 'mid' in zone or 'Mid' in zone:
+                    #     VAV_3.append(value)
+                    # elif 'top' in zone or 'Top' in zone:
+                    #     VAV_5.append(value)
                     if 'bot' in zone or 'Ground' in zone or 'First' in zone:
                         VAV_1.append(normalised_zone_data)
                     elif 'mid' in zone or 'Mid' in zone:
@@ -105,7 +105,7 @@ def vectorise(curr_obs, dist_names, last_episode_obs_history, target_names=state
 
 
 def setup_env(idf_path, epw_path, season, forecast_path, planstep=12, num_days=14, timestep=4):
-#     reward = ViolationPActionReward(1)
+    #     reward = ViolationPActionReward(1)
     reward = Reward()
 
     ep_model = Model(
@@ -176,7 +176,7 @@ def setup_env(idf_path, epw_path, season, forecast_path, planstep=12, num_days=1
     return ep_model
 
 
-def run_episode(model, agent_list, dist_names, last_episode_obs_history):
+def run_dqn_episode(model, agent_list, dist_names, last_episode_obs_history):
     observations = []
     sat_actions_list = []
     forecast_state = model.state_modifier.models[0].get_output_states()
@@ -184,87 +184,66 @@ def run_episode(model, agent_list, dist_names, last_episode_obs_history):
     curr_obs = model.reset()
     observations.append(curr_obs)
     state, AHUs = vectorise(curr_obs, dist_names, last_episode_obs_history, state_names + forecast_state)
-    actions = []
+    step_sat_actions = []
     for i in range(len(agent_list)):
-        actions.append(agent_list[i].agent_start((state + AHUs[i], curr_obs, 0)))
-        sat_actions_list.append(actions[i][0])
+        # As agent_start / step returns (sat_action, [sat + mix1, sat + mix2, sat + mix3])
+        # We only want sat_action
+        sat_action, _ = agent_list[i].agent_start((state + AHUs[i], curr_obs, 0))
+        step_sat_actions.append(sat_action)
+        sat_actions_list.append(sat_action)
     sat_actions_list.append('|*|')
     while not model.is_terminate():
         env_actions = []
-        stpt_actions = SatAction([actions[0][0] + curr_obs['AHU1 MA Temp.'],
-                                  actions[1][0] + curr_obs['AHU2 MA Temp.'],
-                                  actions[2][0] + curr_obs['AHU3 MA Temp.']], curr_obs)
+        stpt_actions = SatAction([step_sat_actions[0] + curr_obs['AHU1 MA Temp.'],
+                                  step_sat_actions[1] + curr_obs['AHU2 MA Temp.'],
+                                  step_sat_actions[2] + curr_obs['AHU3 MA Temp.']], curr_obs)
         env_actions.extend(stpt_actions)
         curr_obs = model.step(env_actions)
         observations.append(curr_obs)
-        # As we read forecasted data from 'last_episode_obs_history', when we model to the last few timesteps,
-        # they plus the timestep then access the obs_history, but they doesn't exist
-        # E.g. in the obs_history, last row is 1991-07-15 00:00:00, but we may access to 1991-07-15 00:15:00 which raises KeyError
+
         forecast_state = model.state_modifier.models[0].get_output_states()
         state, AHUs = vectorise(curr_obs, dist_names, last_episode_obs_history, state_names + forecast_state)
 
-        actions = []
+        step_sat_actions = []
         for i in range(len(agent_list)):
             feeding_state = (state + AHUs[i], curr_obs, curr_obs["timestep"])
-            # print(curr_obs['timestep'])
-            # print('--------------------------------------------------------------------------------------')
-            # print(i, feeding_state)
-            # print('--------------------------------------------------------------------------------------')
-            actions.append(agent_list[i].agent_step(curr_obs["reward"], feeding_state))
-            sat_actions_list.append(actions[i][0])
+            sat_action, _ = (agent_list[i].agent_step(curr_obs["reward"], feeding_state))
+            step_sat_actions.append(sat_action)
+            sat_actions_list.append(sat_action)
         sat_actions_list.append('|*|')
-        # sat_actions = actions
-        # sat_actions_list.append(sat_actions[0])
 
     return observations, sat_actions_list, agent_list
 
 
-# def main():
-#     dist_names = ['Outdoor RH', 'Wind Speed', 'Wind Direction', 'Direct Solar Rad.', 'Diffuse Solar Rad.',
-#                   'Ambient Temp.']
-#     # Set Pre E+ simulation results
-#     dataset_name = "simulation_results/Sim-chicago-summer.pkl"
-#     obs_history = pd.read_pickle(dataset_name)
-#
-#     # Set E+ and IDF files paths
-#     Model.set_energyplus_folder("C:/Softwares/EnergyPlus/EnergyPlusV9-3-0/")
-#     idf_files_path = "C:/users/Dave/Downloads/idf-sample-files/"
-#
-#     # Initialize the model with idf and weather files
-#     model = setup_env(idf_files_path + "2020/RefBldgLargeOfficeNew2004_Chicago.idf",
-#                       "cobs/data/weathers/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw")
-#
-#     agent_params = {
-#         'gamma': 0.99,
-#         'epsilon': 0.1,
-#         'lr': 0.0001,
-#         'batch_size': 64,
-#         'eps_min': 0.1,
-#         'eps_dec': 0.001,
-#         'replace': 1000,
-#         'min_action': -20,
-#         # 'min_sat_action': -20,
-#         'max_action': 20,
-#         # 'max_sat_action': 20,
-#         'num_actions': 66,
-#         'mem_size': 200,
-#         'discrete_sat_actions': 66,
-#         'discrete_blind_actions': 33,
-#         'seed': 42
-#     }
-#     obs = model.reset()
-#     state = vectorise(obs, 'dqn', dist_names, obs_history)
-#     agent_params['input_dims'] = (len(state),)
-#     agent = DQNAgent(agent_params, DQN_Network)
-#
-#     obs, actions, agent = run_episode(model, agent, dist_names, obs_history)
+def run_bdqn_episode(model, agent, dist_names, last_episode_obs_history):
+    observations = []
+    sat_actions_list = []
+    forecast_state = model.state_modifier.models[0].get_output_states()
 
+    curr_obs = model.reset()
+    observations.append(curr_obs)
+    state, AHUs = vectorise(curr_obs, dist_names, last_episode_obs_history, state_names + forecast_state)
 
-#     pprint(obs)
-#     pprint(actions)
-#     pprint(agent)
+    sat_action_tuples, _ = agent.agent_start((state + AHUs[0] + AHUs[1] + AHUs[2], curr_obs, 0))
+    for AHU_sat in sat_action_tuples:
+        sat_actions_list.append(AHU_sat[0])
 
+    sat_actions_list.append('|*|')
+    while not model.is_terminate():
+        env_actions = []
+        stpt_actions = SatAction([AHU_sat[1] for AHU_sat in sat_action_tuples], curr_obs)
+        env_actions.extend(stpt_actions)
 
-# if __name__ == "__main__":
-#     # main()
+        curr_obs = model.step(env_actions)
+        observations.append(curr_obs)
 
+        forecast_state = model.state_modifier.models[0].get_output_states()
+        state, AHUs = vectorise(curr_obs, dist_names, last_episode_obs_history, state_names + forecast_state)
+
+        feeding_state = (state + AHUs[0] + AHUs[1] + AHUs[2], curr_obs, curr_obs["timestep"])
+        sat_action_tuples, _ = agent.agent_step(curr_obs["reward"], feeding_state)
+        for AHU_sat in sat_action_tuples:
+            sat_actions_list.append(AHU_sat[0])
+        sat_actions_list.append('|*|')
+
+    return observations, sat_actions_list, agent

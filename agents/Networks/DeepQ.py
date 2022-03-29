@@ -13,12 +13,13 @@ def weights_init_(m):
 
 class DQN_Network(nn.Module):
 
-    def __init__(self, lr, num_features, num_actions, chkpt_dir):
+    def __init__(self, lr, num_features, num_actions, chkpt_dir='.'):
         if not os.path.exists(chkpt_dir):
             os.makedirs(chkpt_dir)
         self.chkpt_dir = chkpt_dir
 
         super(DQN_Network, self).__init__()
+        self.name = 'DQN'
         self.fc1 = nn.Linear(num_features, 50)
         self.fc2 = nn.Linear(50, 100)
         self.fc3 = nn.Linear(100, 200)

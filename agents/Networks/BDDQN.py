@@ -15,18 +15,20 @@ def weights_init_(m):
 
 
 class BDDQN_Network(nn.Module):
-    def __init__(self, lr, input_dims, num_actions_zones, num_actions, chkpt_dir):
+    # num_actions_zones in our experiments mean num_AHUs
+    def __init__(self, lr, num_features, num_actions_zones, num_actions, chkpt_dir):
         if not os.path.exists(chkpt_dir):
             os.makedirs(chkpt_dir)
         self.chkpt_dir = chkpt_dir
 
         super(BDDQN_Network, self).__init__()
+        self.name = 'BDDQN'
         # self.to(self.device)
 
         self.num_actions_zones = num_actions_zones
-
+        self.device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
         # Base Network
-        self.linear1 = nn.Linear(input_dims[0], 512).to(self.device)
+        self.linear1 = nn.Linear(num_features, 512).to(self.device)
         self.linear2 = nn.Linear(512, 256).to(self.device)
         self.linear3 = nn.Linear(256, 128).to(self.device)
 
@@ -40,7 +42,6 @@ class BDDQN_Network(nn.Module):
         self.apply(weights_init_)
         self.optimizer = optim.Adam(self.parameters(), lr=lr)
         self.loss = nn.MSELoss()
-        self.device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
         self.to(self.device)
 
     def forward(self, x):
@@ -51,7 +52,7 @@ class BDDQN_Network(nn.Module):
         V = self.V(x1)
 
         A_stpts = []
-        for i in range(self.n_stpt_actions):
+        for i in range(self.num_actions_zones):
             A = getattr(self, f"A_stpt_{i}")
             A_stpts.append(A(x1))
 
